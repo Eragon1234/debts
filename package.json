@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@nuxt/ui": "^2.18.7",
+    "@simplewebauthn/browser": "^11.0.0",
+    "@simplewebauthn/server": "^11.0.0",
     "nuxt": "^3.13.2",
     "vue": "latest",
     "vue-router": "latest",
