@@ -13,9 +13,16 @@
     "@nuxt/ui": "^2.18.7",
     "@simplewebauthn/browser": "^11.0.0",
     "@simplewebauthn/server": "^11.0.0",
+    "drizzle-kit": "^0.26.2",
+    "drizzle-orm": "^0.35.3",
+    "nitro-cloudflare-dev": "^0.2.1",
     "nuxt": "^3.13.2",
     "vue": "latest",
     "vue-router": "latest",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241018.0",
+    "wrangler": "^3.81.0"
   }
 }
