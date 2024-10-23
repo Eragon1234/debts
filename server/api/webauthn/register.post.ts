@@ -26,8 +26,6 @@ export default defineWebAuthnRegisterEventHandler({
     const dbUser = await db.insert(tables.users).values({
       username: user.userName,
       name: user.displayName,
-      createdAt: new Date(),
-      lastLoginAt: new Date()
     }).returning().get().catch(() => {
       throw createError({
         statusCode: 400,
