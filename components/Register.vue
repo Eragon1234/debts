@@ -2,6 +2,10 @@
 import {z} from 'zod'
 import type {FormSubmitEvent} from '#ui/types'
 
+const toast = useToast()
+const { fetch } = useUserSession()
+const { register } = useWebAuthn()
+
 const schema = z.object({
   name: z.string(),
   username: z.string(),
@@ -15,8 +19,19 @@ const state = reactive({
 })
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  // Do something with data
-  console.log(event.data)
+  await register({
+    userName: event.data.username,
+    displayName: event.data.name
+  })
+      .then(fetch)
+      .then(async () => await navigateTo('/'))
+      .catch((error) => {
+        toast.add({
+          title: error.data?.message || error.message,
+          description: error.data?.data?.issues[0]?.message || error.data?.data,
+          color: 'red'
+        })
+      })
 }
 </script>
 

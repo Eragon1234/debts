@@ -5,7 +5,7 @@ export default defineNuxtConfig({
     nitro: {
         preset: "cloudflare-pages"
     },
-    modules: ['@nuxt/ui', 'nitro-cloudflare-dev'],
+    modules: ['@nuxt/ui', 'nitro-cloudflare-dev', 'nuxt-auth-utils'],
     auth: {
         webAuthn: true
     },
