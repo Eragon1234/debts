@@ -5,7 +5,7 @@ pages_build_output_dir = "./dist"
 [[ d1_databases ]]
 binding = "DB"
 database_name = "debts"
-database_id = "6913ae50-23ed-41d0-8150-b218ddb29c6b"
+database_id = "204f3209-c52c-4901-a9ff-ea724e46b8b2"
 migrations_dir = "drizzle"
 
 [[ kv_namespaces ]]

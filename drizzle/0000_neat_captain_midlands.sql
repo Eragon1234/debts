@@ -15,6 +15,7 @@ CREATE TABLE `tranfers` (
 	`sender_id` integer NOT NULL,
 	`receiver_id` integer NOT NULL,
 	`amount` integer NOT NULL,
+	`description` text NOT NULL,
 	`date` text NOT NULL,
 	FOREIGN KEY (`sender_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade,
 	FOREIGN KEY (`receiver_id`) REFERENCES `users`(`id`) ON UPDATE no action ON DELETE cascade

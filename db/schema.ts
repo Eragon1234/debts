@@ -24,6 +24,7 @@ export const transfers = sqliteTable('tranfers', {
     senderId: integer('sender_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     receiverId: integer('receiver_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     amount: integer('amount').notNull(),
+    description: text('description').notNull(),
     date: text('date').notNull()
 })
 
