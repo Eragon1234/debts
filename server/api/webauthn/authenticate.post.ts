@@ -22,18 +22,18 @@ export default defineWebAuthnAuthenticateEventHandler({
     const user = await db.query.users.findFirst({
       where: eq(tables.users.username, userName),
       with: {
-        credentials: true
+        passkeyCredentials: true
       }
     })
 
     if (!user) throw createError({ statusCode: 400, message: 'User not found' })
 
-    return user.credentials || []
+    return user.passkeyCredentials || []
   },
   async getCredential(event, credentialID) {
     const db = useDrizzle(event.context.cloudflare.env.DB);
-    const credential = await db.query.credentials.findFirst({
-      where: eq(tables.credentials.id, credentialID),
+    const credential = await db.query.passkeyCredentials.findFirst({
+      where: eq(tables.passkeyCredentials.id, credentialID),
       with: {
         user: true
       }

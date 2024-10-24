@@ -2,11 +2,12 @@
 definePageMeta({
   middleware: 'auth'
 })
-const {loggedIn} = useUserSession();
+const {user} = useUserSession();
+console.log(user.value)
 </script>
 
 <template>
-  Hallo Welt {{ loggedIn }}
+  Hallo Welt
 </template>
 
 <style scoped>

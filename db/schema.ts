@@ -8,7 +8,7 @@ export const users = sqliteTable('users', {
     name: text('name').notNull(),
 })
 
-export const credentials = sqliteTable('credentials', {
+export const passkeyCredentials = sqliteTable('passkey_credentials', {
     userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     id: text('id').notNull().unique(),
     publicKey: text('public_key').notNull(),
@@ -18,6 +18,11 @@ export const credentials = sqliteTable('credentials', {
 }, table => ({
     pk: unique().on(table.userId, table.id)
 }))
+
+export const passwordCredentials = sqliteTable('password_credentials', {
+    userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
+    password: text('password').notNull()
+})
 
 export const transfers = sqliteTable('tranfers', {
     id: integer('id').primaryKey(),
@@ -29,7 +34,8 @@ export const transfers = sqliteTable('tranfers', {
 })
 
 export const usersRelations = relations(users, ({many}) => ({
-    credentials: many(credentials),
+    passkeyCredentials: many(passkeyCredentials),
+    passwordCredentials: many(passwordCredentials),
     sentTransfers: many(transfers, {
         field: 'senderId'
     }),
@@ -38,12 +44,19 @@ export const usersRelations = relations(users, ({many}) => ({
     })
 }));
 
-export const credentialsRelations = relations(credentials, ({one}) => ({
+export const passkeyCredentialsRelations = relations(passkeyCredentials, ({one}) => ({
     user: one(users, {
-        fields: [credentials.userId],
+        fields: [passkeyCredentials.userId],
         references: [users.id]
     })
 }));
+
+export const passwordCredentialsRelations = relations(passwordCredentials, ({one}) => ({
+    user: one(users, {
+        fields: [passkeyCredentials.userId],
+        references: [users.id]
+    })
+}))
 
 export const transfersRelations = relations(transfers, ({one}) => ({
     sender: one(users, {

@@ -33,7 +33,7 @@ export default defineWebAuthnRegisterEventHandler({
       })
     })
 
-    await db.insert(tables.credentials).values({
+    await db.insert(tables.passkeyCredentials).values({
       userId: dbUser.id,
       id: credential.id,
       publicKey: credential.publicKey,

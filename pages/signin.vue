@@ -20,10 +20,10 @@ const items = [
     <UTabs :items="items">
       <template #item="{ item }">
         <div v-if="item.key === 'signin'">
-          <SignIn/>
+          <PasswordSignIn/>
         </div>
         <div v-else>
-          <Register/>
+          <PasswordRegister/>
         </div>
       </template>
     </UTabs>
