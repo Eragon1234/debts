@@ -2,6 +2,50 @@ name = "debts"
 compatibility_date = "2024-01-17"
 pages_build_output_dir = "./dist"
 
+[ dev ]
+local_protocol = "https"
+
+[ vars ]
+JWT_PRIVATE_KEY="""***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+***REMOVED***
+
+"""
+
+NUXT_PUBLIC_JWT_PUBLIC_KEY="""-----BEGIN PUBLIC KEY-----
+MIIBITANBgkqhkiG9w0BAQEFAAOCAQ4AMIIBCQKCAQBwKOQ1nWStY+HvkkCsjFiz
+K7QI9p4ikNLBEoOFZ3fpgSJaSiLALGFJbKkgcSwSPtjtTe6Lj/jyyAGMVwWQrY0G
+zUj/pJW61SRSGbTsORuOvT+ufoeYDLYNz15+pA5wy3uSW6KZUVyDoEGbg+f4ElST
+SofGF+Yf1A9qYtlW+KQLa6Ik3np3GWJY8jextArh2VqMtKfiOTu7QuFl295K8qlL
+0YqCOfJbsvotk07kV4WA040ZcP6vDlwz8wxwRmGvNfW2W3QR3btLKLhnvMuQWNE5
++P1Gc2er4IOvg43eq8s/iRVef42fz9vywgLac2LJoz9nAsvos4bygNnlmt65Jdbj
+AgMBAAE=
+-----END PUBLIC KEY-----"""
+
 [[ d1_databases ]]
 binding = "DB"
 database_name = "debts"

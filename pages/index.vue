@@ -2,8 +2,6 @@
 definePageMeta({
   middleware: 'auth'
 })
-const {user} = useUserSession();
-console.log(user.value)
 </script>
 
 <template>

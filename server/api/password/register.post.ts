@@ -1,6 +1,7 @@
 import {z} from "zod";
 import {tables, useDrizzle} from "~/db/db";
 import {passwordHash} from "~/utils/password";
+import {importPKCS8, SignJWT} from "jose";
 
 export default defineEventHandler(async (event) => {
     const result = await readValidatedBody(event, z.object({
@@ -32,12 +33,23 @@ export default defineEventHandler(async (event) => {
         password: await passwordHash(password)
     })
 
-    await setUserSession(event, {
+    const privateKey = await importPKCS8(process.env.JWT_PRIVATE_KEY as string, 'RS256');
+
+    const token = await new SignJWT({
+        loggedIn: true,
         user: {
             id: user.id,
             name: user.name,
-            username: user.username,
+            username: user.username
         }
+    })
+        .setExpirationTime('7d')
+        .setProtectedHeader({alg: 'RS256'})
+        .sign(privateKey);
+
+    setCookie(event, "jwt", token, {
+        maxAge: 7 * 24 * 60 * 60,
+        secure: true,
     })
 
     return {ok: true}

@@ -5,8 +5,10 @@ export default defineNuxtConfig({
     nitro: {
         preset: "cloudflare-pages"
     },
-    modules: ['@nuxt/ui', 'nitro-cloudflare-dev', 'nuxt-auth-utils'],
-    auth: {
-        webAuthn: true
-    },
+    modules: ['@nuxt/ui', 'nitro-cloudflare-dev'],
+    runtimeConfig: {
+        public: {
+            jwtPublicKey: "",
+        }
+    }
 })
