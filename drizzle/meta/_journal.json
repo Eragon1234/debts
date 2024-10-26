@@ -22,6 +22,13 @@
       "when": 1729952053626,
       "tag": "0002_massive_justice",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1729955877905,
+      "tag": "0003_cultured_yellow_claw",
+      "breakpoints": true
     }
   ]
 }

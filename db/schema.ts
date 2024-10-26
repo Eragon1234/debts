@@ -1,4 +1,4 @@
-import {integer, sqliteTable, text} from "drizzle-orm/sqlite-core";
+import {integer, real, sqliteTable, text} from "drizzle-orm/sqlite-core";
 import {relations} from "drizzle-orm";
 
 export const users = sqliteTable('users', {
@@ -16,7 +16,7 @@ export const transfers = sqliteTable('transfers', {
     id: integer('id').primaryKey(),
     senderId: integer('sender_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     receiverId: integer('receiver_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
-    amount: integer('amount').notNull(),
+    amount: real('amount').notNull(),
     description: text('description').notNull(),
     date: text('date').notNull()
 })
