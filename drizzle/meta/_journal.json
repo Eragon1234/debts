@@ -15,6 +15,13 @@
       "when": 1729766522992,
       "tag": "0001_tan_weapon_omega",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1729952053626,
+      "tag": "0002_massive_justice",
+      "breakpoints": true
     }
   ]
 }
