@@ -15,6 +15,8 @@ const state = reactive({
   password: undefined,
 })
 
+const toast = useToast()
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   $fetch('/api/password/authenticate', {
     method: "POST",
@@ -22,7 +24,12 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   }).then(response => {
     navigateTo('/')
   }).catch(error => {
-    console.log(error)
+    toast.add({
+      title: "Error",
+      description: error.data.message,
+      color: "red",
+    })
+    console.dir(error)
   })
 }
 </script>
