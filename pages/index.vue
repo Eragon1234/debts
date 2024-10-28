@@ -17,7 +17,7 @@ const debts = Object.values(data.value)
         {{ debt.user.name }}
       </NuxtLink>
       <br/>
-      € {{ debt.amount }}
+      € {{ debt.amount.toFixed(2) }}
     </UCard>
   </template>
 </template>
