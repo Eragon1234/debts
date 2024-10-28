@@ -10,5 +10,8 @@ export default defineNuxtConfig({
         public: {
             jwtPublicKey: "",
         }
+    },
+    routeRules: {
+        '/debts/*': {ssr: false}
     }
 })
