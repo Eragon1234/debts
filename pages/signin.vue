@@ -16,7 +16,7 @@ const items = [
 </script>
 
 <template>
-  <UCard class="grid place-items-center">
+  <div class="grid place-items-center">
     <UTabs :items="items">
       <template #item="{ item }">
         <div v-if="item.key === 'signin'">
@@ -27,7 +27,7 @@ const items = [
         </div>
       </template>
     </UTabs>
-  </UCard>
+  </div>
 </template>
 
 <style scoped>
