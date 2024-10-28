@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <UCard class="grid place-items-center h-screen">
+  <UCard class="grid place-items-center">
     <CreateTransfer/>
   </UCard>
 </template>
