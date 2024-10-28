@@ -24,6 +24,8 @@ const state = reactive({
   date: undefined,
 })
 
+const toast = useToast()
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   $fetch("/api/transfers/create", {
     body: event.data,
@@ -32,9 +34,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       "Content-Type": "application/json"
     }
   }).then(response => {
-    console.log(response)
+    navigateTo("/")
   }).catch((error) => {
-    console.error(error)
+    toast.add({
+      title: "Error",
+      description: error.data.message,
+      color: "red",
+    })
+    console.dir(error)
   })
 }
 
