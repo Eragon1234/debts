@@ -52,36 +52,69 @@ async function searchUsers(query: string) {
     }
   })
 }
+
+const items = [
+  {
+    key: "new",
+    label: "New",
+  },
+  {
+    key: "old",
+    label: "Old",
+  },
+]
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" @submit="onSubmit">
-    <UFormGroup label="Sender" name="sender">
-      <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
-                   option-attribute="username" value-attribute="id"/>
-    </UFormGroup>
+  <UTabs :items="items">
+    <template #item="{ item }">
+      <template v-if="item.key === 'new'">
+        <UForm :schema="schema" :state="state" @submit="onSubmit">
+          <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="receiver"
+                       option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-20"/>
+          owes
+          <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
+                       option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-20"/>
+          <UInput v-model="state.amount" type="number" class="inline-block w-20 ml-1" placeholder="Amount"/>
+          €
+          for
+          <UInput v-model="state.description" type="text" class="inline-block w-52"/>
+          on
+          <UInput v-model="state.date" type="date" class="inline-block"/>
+          <UButton type="submit">Submit</UButton>
+        </UForm>
+      </template>
+      <template v-else>
+        <UForm :schema="schema" :state="state" @submit="onSubmit">
+          <UFormGroup label="Sender" name="sender">
+            <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
+                         option-attribute="username" value-attribute="id"/>
+          </UFormGroup>
 
-    <UFormGroup label="Receiver" name="receiver">
-      <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="recipient"
-                   option-attribute="username" value-attribute="id"/>
-    </UFormGroup>
+          <UFormGroup label="Receiver" name="receiver">
+            <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="recipient"
+                         option-attribute="username" value-attribute="id"/>
+          </UFormGroup>
 
-    <UFormGroup label="Description" name="description">
-      <UInput v-model="state.description" type="text"/>
-    </UFormGroup>
+          <UFormGroup label="Description" name="description">
+            <UInput v-model="state.description" type="text"/>
+          </UFormGroup>
 
-    <UFormGroup label="Amount" name="amount">
-      <UInput v-model="state.amount" type="number"/>
-    </UFormGroup>
+          <UFormGroup label="Amount" name="amount">
+            <UInput v-model="state.amount" type="number"/>
+          </UFormGroup>
 
-    <UFormGroup label="Date" name="date">
-      <UInput v-model="state.date" type="date"/>
-    </UFormGroup>
+          <UFormGroup label="Date" name="date">
+            <UInput v-model="state.date" type="date"/>
+          </UFormGroup>
 
-    <UButton type="submit">
-      Create Transfer
-    </UButton>
-  </UForm>
+          <UButton type="submit">
+            Create Transfer
+          </UButton>
+        </UForm>
+      </template>
+    </template>
+  </UTabs>
 </template>
 
 <style scoped>
