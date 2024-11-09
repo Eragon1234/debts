@@ -25,10 +25,17 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
-    const results = await db.select().from(counter).where(and(
+    const result = (await db.select().from(counter).where(and(
         eq(counter.from, userSession.user.id),
         eq(counter.to, parseInt(id))
-    ))
+    )))[0]
 
-    return {count: results[0]?.value || 0};
+    const resultTwo = (await db.select().from(counter).where(and(
+        eq(counter.from, parseInt(id)),
+        eq(counter.to, userSession.user.id)
+    )))[0]
+
+    const value = (result?.value || 0) - (resultTwo?.value || 0)
+
+    return {count: value};
 })
