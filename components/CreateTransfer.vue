@@ -66,55 +66,20 @@ const items = [
 </script>
 
 <template>
-  <UTabs :items="items">
-    <template #item="{ item }">
-      <template v-if="item.key === 'new'">
-        <UForm :schema="schema" :state="state" @submit="onSubmit">
-          <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="receiver"
-                       option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
-          owes
-          <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
-                       option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
-          <UInput v-model="state.amount" type="number" class="inline-block w-28 ml-1" placeholder="Amount" required/>
-          €
-          for
-          <UInput v-model="state.description" type="text" class="inline-block w-52" required/>
-          on
-          <UInput v-model="state.date" type="date" class="inline-block" required/>
-          <UButton type="submit">Submit</UButton>
-        </UForm>
-      </template>
-      <template v-else>
-        <UForm :schema="schema" :state="state" @submit="onSubmit">
-          <UFormGroup label="Sender" name="sender">
-            <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
-                         option-attribute="username" value-attribute="id"/>
-          </UFormGroup>
-
-          <UFormGroup label="Receiver" name="receiver">
-            <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="recipient"
-                         option-attribute="username" value-attribute="id"/>
-          </UFormGroup>
-
-          <UFormGroup label="Description" name="description">
-            <UInput v-model="state.description" type="text"/>
-          </UFormGroup>
-
-          <UFormGroup label="Amount" name="amount">
-            <UInput v-model="state.amount" type="number"/>
-          </UFormGroup>
-
-          <UFormGroup label="Date" name="date">
-            <UInput v-model="state.date" type="date"/>
-          </UFormGroup>
-
-          <UButton type="submit">
-            Create Transfer
-          </UButton>
-        </UForm>
-      </template>
-    </template>
-  </UTabs>
+  <UForm :schema="schema" :state="state" @submit="onSubmit">
+    <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="receiver"
+                 option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
+    owes
+    <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
+                 option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
+    <UInput v-model="state.amount" type="number" class="inline-block w-28 ml-1" placeholder="Amount" required/>
+    €
+    for
+    <UInput v-model="state.description" type="text" class="inline-block w-52" required/>
+    on
+    <UInput v-model="state.date" type="date" class="inline-block" required/>
+    <UButton type="submit">Submit</UButton>
+  </UForm>
 </template>
 
 <style scoped>
