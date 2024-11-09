@@ -1,4 +1,7 @@
 import {parseUserSession} from "~/utils/parseUserSession";
+import {useDrizzle} from "~/db/db";
+import {counter} from "~/db/schema";
+import {and, eq} from "drizzle-orm";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
@@ -26,9 +29,25 @@ export default defineEventHandler(async (event) => {
         throw unauthorized
     }
 
-    const kv = event.context.cloudflare.env.KV;
+    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const changed = await db
+        .update(counter)
+        .set({
+            value: body.count
+        })
+        .where(and(
+            eq(counter.from, userSession.user.id),
+            eq(counter.to, parseInt(id))
+        ))
+        .returning()
 
-    kv.put(`${userSession.user.id}->${id}`, body.count);
+    if (changed.length === 0) {
+        await db.insert(counter).values({
+            from: userSession.user.id,
+            to: parseInt(id),
+            value: body.count
+        })
+    }
 
     return {ok: true}
 })

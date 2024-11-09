@@ -4,8 +4,7 @@ declare module "h3" {
         cloudflare: {
             request: Request;
             env: {
-                DB: D1Database,
-                KV: KVNamespace
+                DB: D1Database
             };
             context: ExecutionContext;
         };

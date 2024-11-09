@@ -10,7 +10,3 @@ binding = "DB"
 database_name = "debts"
 database_id = "204f3209-c52c-4901-a9ff-ea724e46b8b2"
 migrations_dir = "drizzle"
-
-[[ kv_namespaces ]]
-id = "a81981eafe9d4ab3b08efa324848263f"
-binding = "KV"
