@@ -23,9 +23,7 @@ const debts = Object.values(data.value)
           <br/>
           € {{ debt.amount.toFixed(2) }}
         </div>
-        <ClientOnly>
-          <Counter :id="debt.user.id"/>
-        </ClientOnly>
+        <Counter :id="debt.user.id"/>
       </div>
     </UCard>
   </template>

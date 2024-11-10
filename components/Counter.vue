@@ -3,11 +3,7 @@ const props = defineProps<{
   id: number
 }>()
 
-const data = ref({count: 0});
-const refresh = async () => {
-  data.value = await $fetch(`/api/count/${props.id}`)
-}
-refresh()
+const {data, refresh} = useFetch(`/api/count/${props.id}`)
 
 const updateCount = async (newCount: number) => {
   await $fetch(`/api/count/${props.id}/set`, {
