@@ -8,7 +8,10 @@ import type {FormSubmitEvent} from "#ui/types";
 
 const schema = z.object({
   sender: z.number().int(),
-  receiver: z.number().int(),
+  receivers: z.array(z.object({
+    id: z.number(),
+    username: z.string()
+  })),
   amount: z.number(),
   description: z.string(),
   date: z.string().date().default(() => new Date().toISOString())
@@ -16,9 +19,9 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
-const state = reactive({
+const state = reactive<Partial<Schema>>({
   sender: undefined,
-  receiver: undefined,
+  receivers: [],
   amount: undefined,
   description: undefined,
   date: undefined,
@@ -67,8 +70,13 @@ const items = [
 
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
-    <USelectMenu v-model="state.receiver" :searchable="searchUsers" name="receiver"
-                 option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
+    <USelectMenu v-model="state.receivers" :searchable="searchUsers" name="receiver"
+                 option-attribute="username" class="inline-block w-fit min-w-28" required
+                 multiple>
+      <template #label>
+        <span v-if="state.receivers?.length" class="truncate">{{ state.receivers.map(r => r.username).join(', ') }}</span>
+      </template>
+    </USelectMenu>
     owes
     <USelectMenu v-model="state.sender" :searchable="searchUsers" name="sender"
                  option-attribute="username" value-attribute="id" class="inline-block w-fit min-w-28" required/>
