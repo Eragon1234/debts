@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
         )
     ))[0]
 
-    const newCount = body.count + reverseValue.value
+    const newCount = body.count + (reverseValue?.value ?? 0)
 
     const changed = await db
         .update(counter)
