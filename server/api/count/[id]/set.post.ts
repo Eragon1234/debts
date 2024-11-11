@@ -30,10 +30,20 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
+
+    const reverseValue = (await db.select().from(counter).where(
+        and(
+            eq(counter.from, parseInt(id)),
+            eq(counter.to, userSession.user.id)
+        )
+    ))[0]
+
+    const newCount = body.count + reverseValue.value
+
     const changed = await db
         .update(counter)
         .set({
-            value: body.count
+            value: newCount
         })
         .where(and(
             eq(counter.from, userSession.user.id),
@@ -45,7 +55,7 @@ export default defineEventHandler(async (event) => {
         await db.insert(counter).values({
             from: userSession.user.id,
             to: parseInt(id),
-            value: body.count
+            value: newCount
         })
     }
 
