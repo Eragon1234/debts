@@ -6,9 +6,9 @@ import {transfers} from "~/db/schema";
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
 export default defineEventHandler(async (event) => {
-    const id = getRouterParam(event, "userid");
+    const userid = getRouterParam(event, "userid");
 
-    if (!id) {
+    if (!userid) {
         throw createError({statusCode: 400, message: "Missing user id"})
     }
 
@@ -23,6 +23,8 @@ export default defineEventHandler(async (event) => {
     if (!userSession.loggedIn) {
         throw unauthorized
     }
+
+    const id = parseInt(userid);
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
