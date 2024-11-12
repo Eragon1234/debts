@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 const {data} = await useFetch("/api/transfers/debts")
-const debts = Object.values(data.value)
+const debts = Object.values(data.value ?? {})
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const debts = Object.values(data.value)
     <UCard class="w-50">
       <div class="flex flex-row justify-between">
         <div>
-          <NuxtLink :to="'/debts/' + debt.user.id">
+          <NuxtLink :to="`/debts/${debt.user.id}`">
             {{ debt.user.name }}
           </NuxtLink>
           <br/>

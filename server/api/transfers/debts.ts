@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
         .innerJoin(users, eq(users.id, transfers.senderId))
     credits = credits.map(credit => ({amount: -credit.amount, user: credit.user}))
 
-    const debts = {}
+    const debts: {[key: number]: typeof debits[0]} = {}
 
     for (const debt of [...debits, ...credits]) {
         if (debt.user.id in debts) {
