@@ -17,7 +17,6 @@ for (const debt of debts.data.value) {
   }
   debtsByDate.get(debt.date).push(debt);
 }
-console.dir(debtsByDate);
 </script>
 
 <template>
