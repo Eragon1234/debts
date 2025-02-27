@@ -2,13 +2,14 @@ import {z} from "zod";
 import {tables, useDrizzle} from "~/db/db";
 import {passwordHash} from "~/utils/password";
 import {importPKCS8, SignJWT} from "jose";
+import {createInsertSchema} from "drizzle-zod";
+
+const createUserSchema = createInsertSchema(tables.users).extend({
+    password: z.string().min(1).trim()
+});
 
 export default defineEventHandler(async (event) => {
-    const result = await readValidatedBody(event, z.object({
-        username: z.string().min(1).trim(),
-        name: z.string().min(1).trim(),
-        password: z.string().min(1).trim(),
-    }).safeParse);
+    const result = await readValidatedBody(event, createUserSchema.safeParse);
 
     if (!result.success) {
         throw result.error.issues
