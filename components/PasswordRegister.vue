@@ -19,7 +19,7 @@ const state = reactive({
 const toast = useToast()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  $fetch('/api/password/register', {
+  $fetch('/api/users', {
     method: "POST",
     body: event.data
   }).then(response => {
