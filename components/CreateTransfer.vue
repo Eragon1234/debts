@@ -30,7 +30,7 @@ const state = reactive<Partial<Schema>>({
 const toast = useToast()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  $fetch("/api/transfers/create", {
+  $fetch("/api/transfers", {
     body: event.data,
     method: "POST",
     headers: {
