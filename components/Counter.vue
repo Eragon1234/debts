@@ -6,8 +6,8 @@ const props = defineProps<{
 const {data, refresh} = useFetch(`/api/count/${props.id}`)
 
 const updateCount = async (newCount: number) => {
-  await $fetch(`/api/count/${props.id}/set`, {
-    method: 'POST',
+  await $fetch(`/api/count/${props.id}`, {
+    method: 'PUT',
     body: {count: newCount}
   });
   refresh()
