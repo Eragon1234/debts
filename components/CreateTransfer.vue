@@ -49,7 +49,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 }
 
 async function searchUsers(query: string) {
-  return $fetch("/api/search-users", {
+  return $fetch("/api/users/search", {
     query: {
       query: query,
     }
