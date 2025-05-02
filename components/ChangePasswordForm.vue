@@ -36,7 +36,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
     <UFormGroup label="New password" name="password">
-      <UInput v-model="state.password"/>
+      <UInput v-model="state.password" type="password"/>
     </UFormGroup>
 
     <UButton type="submit">
