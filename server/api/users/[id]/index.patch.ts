@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
-    db
+    await db
         .update(tables.users)
         .set(result.data)
         .where(eq(tables.users.id, parseInt(id)))

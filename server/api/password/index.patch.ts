@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
     const db = useDrizzle(event.context.cloudflare.env.DB);
     const password = await passwordHash(result.data.password);
 
-    db
+    await db
         .update(tables.passwordCredentials)
         .set({password})
         .where(eq(tables.passwordCredentials.userId, userSession.user.id))
