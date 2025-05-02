@@ -2,6 +2,7 @@ import {createUpdateSchema} from "drizzle-zod";
 import {tables, useDrizzle} from "~/db/db";
 import {eq} from "drizzle-orm";
 import {parseUserSession} from "~/utils/parseUserSession";
+import {setJWTToken} from "~/utils/jwt";
 
 const patchUserSchema = createUpdateSchema(tables.users);
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
@@ -33,16 +34,20 @@ export default defineEventHandler(async (event) => {
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
-    await db
+    const updatedUser = await db
         .update(tables.users)
         .set(result.data)
         .where(eq(tables.users.id, parseInt(id)))
+        .returning()
+        .then(updated => updated[0])
         .catch(() => {
             throw createError({
                 statusCode: 400,
                 message: 'User not found'
             })
         });
+
+    await setJWTToken(updatedUser, event);
 
     return {ok: true}
 })
