@@ -14,7 +14,7 @@ const schema = z.object({
   })),
   amount: z.number(),
   description: z.string(),
-  date: z.string().date().default(() => new Date().toISOString())
+  date: z.iso.date().default(() => new Date().toISOString())
 })
 
 type Schema = z.output<typeof schema>
