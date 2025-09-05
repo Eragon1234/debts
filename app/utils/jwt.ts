@@ -1,4 +1,4 @@
-import type {User} from "~/db/db";
+import type {User} from "~~/db/db";
 import type {EventHandlerRequest, H3Event} from "h3";
 import {importPKCS8, SignJWT} from "jose";
 

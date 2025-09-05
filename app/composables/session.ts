@@ -1,4 +1,4 @@
-import type {User} from "~/db/db";
+import type {User} from "~~/db/db";
 import {useState} from "#app";
 
 export type UserSession = {
