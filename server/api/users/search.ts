@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {tables, useDrizzle} from "~/db/db";
+import {tables, useDrizzle} from "~~/db/db";
 import {like} from "drizzle-orm";
 
 const searchUserSchema = z.object({

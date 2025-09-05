@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {tables, useDrizzle} from "~/db/db";
+import {tables, useDrizzle} from "~~/db/db";
 import {passwordHash} from "~/utils/password";
 import {createInsertSchema} from "drizzle-zod";
 import {setJWTToken} from "~/utils/jwt";

@@ -1,5 +1,5 @@
 import {createUpdateSchema} from "drizzle-zod";
-import {tables, useDrizzle} from "~/db/db";
+import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {parseUserSession} from "~/utils/parseUserSession";
 import {setJWTToken} from "~/utils/jwt";

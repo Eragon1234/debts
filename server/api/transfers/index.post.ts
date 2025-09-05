@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {parseUserSession} from "~/utils/parseUserSession";
-import {tables, useDrizzle} from "~/db/db";
+import {tables, useDrizzle} from "~~/db/db";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 

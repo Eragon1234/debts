@@ -1,7 +1,7 @@
 import {z} from "zod";
 import {parseUserSession} from "~/utils/parseUserSession";
 import {passwordHash} from "~/utils/password";
-import {tables, useDrizzle} from "~/db/db";
+import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
 
 const updatePasswordSchema = z.object({

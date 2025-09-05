@@ -12,18 +12,18 @@
   "dependencies": {
     "@nuxt/ui": "^2.20.0",
     "bcryptjs": "^3.0.2",
-    "drizzle-kit": "^0.30.1",
-    "drizzle-orm": "^0.38.2",
-    "drizzle-zod": "^0.7.0",
-    "jose": "^5.9.6",
-    "nitro-cloudflare-dev": "^0.2.1",
-    "nuxt": "^3.16.0",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0",
-    "zod": "^3.24.1"
+    "drizzle-kit": "^0.31.4",
+    "drizzle-orm": "^0.44.5",
+    "drizzle-zod": "^0.8.3",
+    "jose": "^6.1.0",
+    "nitro-cloudflare-dev": "^0.2.2",
+    "nuxt": "4.1.0",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1",
+    "zod": "^4.1.5"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241216.0",
-    "wrangler": "^3.97.0"
+    "@cloudflare/workers-types": "^4.20250905.0",
+    "wrangler": "^4.34.0"
   }
 }

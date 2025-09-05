@@ -1,6 +1,6 @@
 import {parseUserSession} from "~/utils/parseUserSession";
-import {useDrizzle} from "~/db/db";
-import {counter} from "~/db/schema";
+import {useDrizzle} from "~~/db/db";
+import {counter} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
