@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     },
     modules: ['@nuxt/ui', 'nitro-cloudflare-dev'],
     runtimeConfig: {
+        jwtPrivateKey: "",
         public: {
             jwtPublicKey: "",
         }
