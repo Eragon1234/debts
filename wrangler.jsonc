@@ -1,0 +1,23 @@
+{
+  "name": "debts",
+  "main": "./.output/server/index.mjs",
+  "compatibility_date": "2025-09-05",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./.output/public/"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "debts",
+      "database_id": "204f3209-c52c-4901-a9ff-ea724e46b8b2",
+      "migrations_dir": "./drizzle"
+    }
+  ],
+  "dev": {
+    "local_protocol": "https"
+  }
+}
