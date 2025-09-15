@@ -1,30 +1,31 @@
 <script setup lang="ts">
+import type {TabsItem} from "@nuxt/ui";
+
 definePageMeta({
   middleware: 'guest'
 })
 
 const items = [
   {
-    key: "signin",
     label: "Sign In",
+    slot: "signin" as const
   },
   {
-    key: "register",
     label: "Register",
+    slot: "register" as const
   },
-]
+] satisfies TabsItem[]
+
 </script>
 
 <template>
   <div class="grid place-items-center">
     <UTabs :items="items">
-      <template #item="{ item }">
-        <div v-if="item.key === 'signin'">
+      <template #signin>
           <PasswordSignIn/>
-        </div>
-        <div v-else>
-          <PasswordRegister/>
-        </div>
+      </template>
+      <template #register>
+        <PasswordRegister/>
       </template>
     </UTabs>
   </div>

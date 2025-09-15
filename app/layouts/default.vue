@@ -17,9 +17,9 @@ const {loggedIn, user} = getUserSession();
       <NuxtLink to="/" class="text-3xl">Debts</NuxtLink>
       <div class="flex flex-row items-center">
         <NuxtLink to="/new-transfer" class="text-4xl gap-1">+</NuxtLink>
-        <UDropdown :items="items" v-if="loggedIn">
+        <UDropdownMenu :items="items" v-if="loggedIn">
           <UAvatar :alt="user?.name"/>
-        </UDropdown>
+        </UDropdownMenu>
       </div>
     </div>
     <slot/>

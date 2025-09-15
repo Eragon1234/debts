@@ -22,7 +22,7 @@ for (const debt of debts.data.value) {
 <template>
   <div class="w-96 mx-auto">
     <template v-for="[date, debts] in debtsByDate">
-      <UDivider :label="date.toLocaleString()" class="mb-3 mt-6"/>
+      <USeparator :label="date.toLocaleString()" class="mb-3 mt-6"/>
       <div v-for="debt in debts">
         <UCard>
           <div class="flex flex-row justify-between">

@@ -27,7 +27,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     toast.add({
       title: "Error",
       description: err.data.message,
-      color: "red"
+      color: "error"
     })
   })
 }
@@ -35,9 +35,9 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
-    <UFormGroup label="New password" name="password">
+    <UFormField label="New password" name="password">
       <UInput v-model="state.password" type="password"/>
-    </UFormGroup>
+    </UFormField>
 
     <UButton type="submit">
       Change Password

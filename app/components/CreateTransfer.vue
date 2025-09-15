@@ -36,13 +36,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     headers: {
       "Content-Type": "application/json"
     }
-  }).then(response => {
+  }).then(_ => {
     navigateTo("/")
   }).catch((error) => {
     toast.add({
       title: "Error",
       description: error.data.message,
-      color: "red",
+      color: "error",
     })
     console.dir(error)
   })

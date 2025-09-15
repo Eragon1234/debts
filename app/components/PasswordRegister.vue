@@ -22,13 +22,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   $fetch('/api/users', {
     method: "POST",
     body: event.data
-  }).then(response => {
+  }).then(_ => {
     navigateTo('/')
   }).catch(error => {
     toast.add({
       title: "Error",
       description: error.data.message,
-      color: "red",
+      color: "error",
     })
     console.dir(error)
   })
@@ -38,17 +38,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UCard rounded>
     <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
-      <UFormGroup label="Username" name="username">
+      <UFormField label="Username" name="username">
         <UInput v-model="state.username"/>
-      </UFormGroup>
+      </UFormField>
 
-      <UFormGroup label="Name" name="name">
+      <UFormField label="Name" name="name">
         <UInput v-model="state.name"/>
-      </UFormGroup>
+      </UFormField>
 
-      <UFormGroup label="Password" name="password">
+      <UFormField label="Password" name="password">
         <UInput v-model="state.password" type="password"/>
-      </UFormGroup>
+      </UFormField>
 
       <UButton type="submit">
         Register

@@ -11,5 +11,6 @@ export default defineNuxtConfig({
     },
     routeRules: {
         '/debts/*': {ssr: false}
-    }
+    },
+    css: ['~/assets/css/main.css']
 })

@@ -31,7 +31,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     toast.add({
       title: "Error",
       description: err.data.message,
-      color: "red"
+      color: "error"
     })
   })
 }
@@ -39,13 +39,13 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UForm :schema="schema" :state="state" @submit="onSubmit">
-    <UFormGroup label="Name" name="name">
+    <UFormField label="Name" name="name">
       <UInput v-model="state.name"/>
-    </UFormGroup>
+    </UFormField>
 
-    <UFormGroup label="Username" name="username">
+    <UFormField label="Username" name="username">
       <UInput v-model="state.username"/>
-    </UFormGroup>
+    </UFormField>
 
     <UButton type="submit">
       Update
