@@ -12,11 +12,11 @@ const {loggedIn, user} = getUserSession();
 </script>
 
 <template>
-  <UContainer>
+  <UContainer class="w-3xl">
     <div class="flex flex-row justify-between py-3">
       <NuxtLink to="/" class="text-3xl">Debts</NuxtLink>
-      <div class="flex flex-row items-center">
-        <NuxtLink to="/new-transfer" class="text-4xl gap-1">+</NuxtLink>
+      <div class="flex flex-row items-center gap-4">
+        <NuxtLink to="/new-transfer" class="text-4xl">+</NuxtLink>
         <UDropdownMenu :items="items" v-if="loggedIn">
           <UAvatar :alt="user?.name"/>
         </UDropdownMenu>
