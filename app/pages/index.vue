@@ -17,7 +17,7 @@ const debts = Object.values(data.value ?? {})
     <UCard class="w-100">
       <div class="flex flex-row justify-between">
         <div>
-          <NuxtLink :to="`/debts/${debt.user.id}`">
+          <NuxtLink :to="{ name: 'debts-userid', params: { userid: debt.user.id } }">
             {{ debt.user.name }}
           </NuxtLink>
           <br/>
