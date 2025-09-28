@@ -55,17 +55,6 @@ async function searchUsers(query: string) {
     }
   })
 }
-
-const items = [
-  {
-    key: "new",
-    label: "New",
-  },
-  {
-    key: "old",
-    label: "Old",
-  },
-]
 </script>
 
 <template>
