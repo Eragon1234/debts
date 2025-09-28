@@ -1,22 +1,11 @@
-import {z} from "zod";
 import {parseUserSession} from "~/utils/parseUserSession";
 import {tables, useDrizzle} from "~~/db/db";
+import {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
-const schema = z.object({
-    sender: z.number().int(),
-    receivers: z.array(z.object({
-        id: z.number(),
-        username: z.string()
-    })),
-    amount: z.number(),
-    description: z.string(),
-    date: z.iso.date().default(() => new Date().toISOString())
-})
-
 export default defineEventHandler(async (event) => {
-    const result = await readValidatedBody(event, schema.safeParse);
+    const result = await readValidatedBody(event, createTransferSchema.safeParse);
 
     if (!result.success) {
         throw result.error.issues

@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
+import {changePasswordSchema} from "#shared/schemas/ChangePasswordSchema";
 
-const schema = z.object({
-  password: z.string(),
-})
-
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof changePasswordSchema>
 
 const state = reactive({
   password: undefined,
@@ -34,7 +31,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" @submit="onSubmit">
+  <UForm :schema="changePasswordSchema" :state="state" @submit="onSubmit">
     <UFormField label="New password" name="password">
       <UInput v-model="state.password" type="password"/>
     </UFormField>

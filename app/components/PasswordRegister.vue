@@ -1,14 +1,9 @@
 <script setup lang="ts">
 import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
+import {createUserSchema} from "#shared/schemas/CreateUserSchema";
 
-const schema = z.object({
-  username: z.string(),
-  name: z.string(),
-  password: z.string(),
-})
-
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof createUserSchema>
 
 const state = reactive({
   username: undefined,
@@ -37,7 +32,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UCard rounded>
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UForm :schema="createUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
       <UFormField label="Username" name="username">
         <UInput v-model="state.username"/>
       </UFormField>

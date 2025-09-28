@@ -1,23 +1,13 @@
 <script setup lang="ts">
+import {z} from "zod";
+import type {FormSubmitEvent} from "#ui/types";
+import type {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
+
 definePageMeta({
   middleware: "auth"
 })
 
-import {z} from "zod";
-import type {FormSubmitEvent} from "#ui/types";
-
-const schema = z.object({
-  sender: z.number().int(),
-  receivers: z.array(z.object({
-    id: z.number(),
-    username: z.string()
-  })),
-  amount: z.number(),
-  description: z.string(),
-  date: z.iso.date().default(() => new Date().toISOString())
-})
-
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof createTransferSchema>
 
 const state = reactive<Partial<Schema>>({
   sender: undefined,
@@ -58,7 +48,7 @@ async function searchUsers(query: string) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" @submit="onSubmit">
+  <UForm :schema="createTransferSchema" :state="state" @submit="onSubmit">
     <USelectMenu v-model="state.receivers" :searchable="searchUsers" name="receiver"
                  option-attribute="username" class="inline-block w-fit min-w-28" required
                  multiple>

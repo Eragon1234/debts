@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
+import {patchUserSchema} from "#shared/schemas/PatchUserSchema";
 
 const {user} = getUserSession();
 
-const schema = z.object({
-  name: z.string(),
-  username: z.string(),
-})
-
-type Schema = z.output<typeof schema>
+type Schema = z.output<typeof patchUserSchema>
 
 const state = reactive({
   name: user!.name,
@@ -38,7 +34,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="schema" :state="state" @submit="onSubmit">
+  <UForm :schema="patchUserSchema" :state="state" @submit="onSubmit">
     <UFormField label="Name" name="name">
       <UInput v-model="state.name"/>
     </UFormField>

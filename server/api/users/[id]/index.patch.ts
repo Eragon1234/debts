@@ -1,10 +1,9 @@
-import {createUpdateSchema} from "drizzle-zod";
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {parseUserSession} from "~/utils/parseUserSession";
 import {setJWTToken} from "~/utils/jwt";
+import {patchUserSchema} from "#shared/schemas/PatchUserSchema";
 
-const patchUserSchema = createUpdateSchema(tables.users);
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
 export default defineEventHandler(async (event) => {

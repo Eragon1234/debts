@@ -1,14 +1,11 @@
-import {z} from "zod";
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {passwordVerify} from "~/utils/password";
 import {setJWTToken} from "~/utils/jwt";
+import {signInSchema} from "#shared/schemas/SignInSchema";
 
 export default defineEventHandler(async (event) => {
-    const result = await readValidatedBody(event, z.object({
-        username: z.string().min(1).trim(),
-        password: z.string().min(1).trim(),
-    }).safeParse);
+    const result = await readValidatedBody(event, signInSchema.safeParse);
 
     if (!result.success) {
         throw result.error.issues

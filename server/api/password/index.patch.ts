@@ -1,16 +1,13 @@
-import {z} from "zod";
 import {parseUserSession} from "~/utils/parseUserSession";
 import {passwordHash} from "~/utils/password";
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
+import {changePasswordSchema} from "#shared/schemas/ChangePasswordSchema";
 
-const updatePasswordSchema = z.object({
-    password: z.string(),
-})
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
 export default defineEventHandler(async (event) => {
-    const result = await readValidatedBody(event, updatePasswordSchema.safeParse);
+    const result = await readValidatedBody(event, changePasswordSchema.safeParse);
 
     if (!result.success) {
         throw result.error.issues

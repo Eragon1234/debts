@@ -1,12 +1,7 @@
-import {z} from "zod";
 import {tables, useDrizzle} from "~~/db/db";
 import {passwordHash} from "~/utils/password";
-import {createInsertSchema} from "drizzle-zod";
 import {setJWTToken} from "~/utils/jwt";
-
-const createUserSchema = createInsertSchema(tables.users).extend({
-    password: z.string().min(1).trim()
-});
+import {createUserSchema} from "#shared/schemas/CreateUserSchema";
 
 export default defineEventHandler(async (event) => {
     const result = await readValidatedBody(event, createUserSchema.safeParse);
