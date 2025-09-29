@@ -48,9 +48,10 @@ const { data: receiversSearchItems, status: receiversSearchStatus } = await useF
 const senderSearchTerm = ref<string>('');
 const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('/api/users/search', {
   query: {
-    query: receiversSearchTerm.value,
+    query: senderSearchTerm.value,
   }
 })
+console.log(senderSearchItems)
 </script>
 
 <template>
