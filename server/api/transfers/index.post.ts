@@ -28,13 +28,13 @@ export default defineEventHandler(async (event) => {
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
     for (let i = 0; i < data.receivers.length; i++) {
-        if (userSession.user.id !== data.sender && userSession.user.id !== data.receivers[i].id) {
+        if (userSession.user.id !== data.sender && userSession.user.id !== data.receivers[i]) {
             throw createError({statusCode: 403, message: "You are not allowed to create a transfer for this user."})
         }
 
         await db.insert(tables.transfers).values({
             senderId: data.sender,
-            receiverId: data.receivers[i].id,
+            receiverId: data.receivers[i],
             amount: data.amount,
             description: data.description,
             date: data.date,

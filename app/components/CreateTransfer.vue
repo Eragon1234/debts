@@ -43,7 +43,7 @@ const { data: receiversSearchItems, status: receiversSearchStatus } = await useF
   query: {
     query: receiversSearchTerm.value,
   },
-  transform: (data) => data.map(u => ({label: u.username, value: u})),
+  transform: (data) => data.map(u => ({label: u.username, value: u.id})),
   watch: [receiversSearchTerm]
 })
 
