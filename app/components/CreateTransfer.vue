@@ -43,7 +43,7 @@ const { data: receiversSearchItems, status: receiversSearchStatus } = await useF
   query: {
     query: receiversSearchTerm.value,
   },
-  transform: (data) => data.map(u => ({label: u.username, value: u.id})),
+  transform: (data) => data.map(u => ({label: u.username, id: u.id})),
   watch: [receiversSearchTerm]
 })
 
@@ -52,7 +52,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
   query: {
     query: senderSearchTerm.value,
   },
-  transform: (data) => data.map(u => ({label: u.username, value: u.id})),
+  transform: (data) => data.map(u => ({label: u.username, id: u.id})),
   watch: [senderSearchTerm]
 })
 </script>
@@ -62,6 +62,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
     <USelectMenu
         v-model="state.receivers"
         name="receiver"
+        value-key="id"
         :items="receiversSearchItems"
         v-model:search-term="receiversSearchTerm"
         :loading="receiversSearchStatus === 'pending'"
@@ -72,6 +73,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
     <USelectMenu
         v-model="state.sender"
         name="sender"
+        value-key="id"
         :items="senderSearchItems"
         v-model:search-term="senderSearchTerm"
         :loading="senderSearchStatus === 'pending'"
