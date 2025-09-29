@@ -40,20 +40,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 const receiversSearchTerm = ref<string>('');
 const { data: receiversSearchItems, status: receiversSearchStatus } = await useFetch('/api/users/search', {
-  query: {
-    query: receiversSearchTerm.value,
+  params: {
+    query: receiversSearchTerm,
   },
-  transform: (data) => data.map(u => ({label: u.username, id: u.id})),
-  watch: [receiversSearchTerm]
+  transform: (data) => data.map(u => ({label: u.username, id: u.id}))
 })
 
 const senderSearchTerm = ref<string>('');
 const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('/api/users/search', {
-  query: {
-    query: senderSearchTerm.value,
+  params: {
+    query: senderSearchTerm,
   },
-  transform: (data) => data.map(u => ({label: u.username, id: u.id})),
-  watch: [senderSearchTerm]
+  transform: (data) => data.map(u => ({label: u.username, id: u.id}))
 })
 </script>
 
@@ -65,6 +63,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
         value-key="id"
         :items="receiversSearchItems"
         v-model:search-term="receiversSearchTerm"
+        ignore-filter
         :loading="receiversSearchStatus === 'pending'"
         class="inline-block w-fit min-w-28"
         required multiple
@@ -76,6 +75,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
         value-key="id"
         :items="senderSearchItems"
         v-model:search-term="senderSearchTerm"
+        ignore-filter
         :loading="senderSearchStatus === 'pending'"
         class="inline-block w-fit min-w-28"
         required
