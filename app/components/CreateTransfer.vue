@@ -42,16 +42,19 @@ const receiversSearchTerm = ref<string>('');
 const { data: receiversSearchItems, status: receiversSearchStatus } = await useFetch('/api/users/search', {
   query: {
     query: receiversSearchTerm.value,
-  }
+  },
+  transform: (data) => data.map(u => ({label: u.username, value: u})),
+  watch: [receiversSearchTerm]
 })
 
 const senderSearchTerm = ref<string>('');
 const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('/api/users/search', {
   query: {
     query: senderSearchTerm.value,
-  }
+  },
+  transform: (data) => data.map(u => ({label: u.username, value: u.id})),
+  watch: [senderSearchTerm]
 })
-console.log(senderSearchItems)
 </script>
 
 <template>
@@ -62,15 +65,9 @@ console.log(senderSearchItems)
         :items="receiversSearchItems"
         v-model:search-term="receiversSearchTerm"
         :loading="receiversSearchStatus === 'pending'"
-        option-attribute="username"
         class="inline-block w-fit min-w-28"
-        required
-        multiple
-    >
-      <template #label>
-        <span v-if="state.receivers?.length" class="truncate">{{ state.receivers.map(r => r.username).join(', ') }}</span>
-      </template>
-    </USelectMenu>
+        required multiple
+    />
     owes
     <USelectMenu
         v-model="state.sender"
@@ -78,8 +75,6 @@ console.log(senderSearchItems)
         :items="senderSearchItems"
         v-model:search-term="senderSearchTerm"
         :loading="senderSearchStatus === 'pending'"
-        option-attribute="username"
-        value-attribute="id"
         class="inline-block w-fit min-w-28"
         required
     />
