@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
-import type {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
+import {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
 
 definePageMeta({
   middleware: "auth"
