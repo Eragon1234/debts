@@ -20,7 +20,7 @@ for (const debt of debts.data.value) {
 </script>
 
 <template>
-  <div class="w-96 mx-auto">
+  <div class="max-w-sm mx-auto">
     <template v-for="[date, debts] in debtsByDate">
       <USeparator :label="date.toLocaleString()" class="mb-3 mt-6"/>
       <div v-for="debt in debts">

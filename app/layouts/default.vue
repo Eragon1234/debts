@@ -12,7 +12,7 @@ const {loggedIn, user} = getUserSession();
 </script>
 
 <template>
-  <UContainer class="w-3xl">
+  <UContainer class="max-w-3xl">
     <div class="flex flex-row justify-between py-3">
       <NuxtLink to="/" class="text-3xl">Debts</NuxtLink>
       <div class="flex flex-row items-center gap-4">

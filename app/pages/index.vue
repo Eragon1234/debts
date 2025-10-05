@@ -14,7 +14,7 @@ const debts = Object.values(data.value ?? {})
     You don't have any debts (yet).
   </template>
   <template v-else v-for="debt in debts" :key="debt.user.id">
-    <UCard class="w-100">
+    <UCard class="max-w-sm">
       <div class="flex flex-row justify-between">
         <div>
           <NuxtLink :to="{ name: 'debts-userid', params: { userid: debt.user.id } }">
