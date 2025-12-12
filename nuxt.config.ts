@@ -5,8 +5,13 @@ export default defineNuxtConfig({
     modules: ['@nuxt/ui', 'nitro-cloudflare-dev'],
     runtimeConfig: {
         jwtPrivateKey: "",
+        oidcClientSecret: "",
         public: {
+            oidcName: "",
+            oidcDiscoveryURL: "",
+            oidcClientID: "",
             jwtPublicKey: "",
+            baseURL: ""
         }
     },
     routeRules: {
