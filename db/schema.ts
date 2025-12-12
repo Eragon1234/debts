@@ -29,6 +29,22 @@ export const passwordCredentialsRelations = relations(passwordCredentials, ({one
     })
 }))
 
+export const oidcCredentials = sqliteTable('oidc_credentials', {
+    id: integer('id').primaryKey(),
+    userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
+    provider: text('provider').notNull(),
+    subject: text('subject').notNull()
+}, (t) => ({
+    unique: unique().on(t.provider, t.subject)
+}))
+
+export const oidcCredentialsRelations = relations(oidcCredentials, ({one}) => ({
+    user: one(users, {
+        fields: [oidcCredentials.userId],
+        references: [users.id]
+    })
+}))
+
 export const transfers = sqliteTable('transfers', {
     id: integer('id').primaryKey(),
     senderId: integer('sender_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
