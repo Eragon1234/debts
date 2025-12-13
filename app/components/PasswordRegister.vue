@@ -2,14 +2,34 @@
 import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
 import {createUserSchema} from "#shared/schemas/CreateUserSchema";
+import type {AuthFormField} from "@nuxt/ui";
+import {signInSchema} from "#shared/schemas/SignInSchema";
 
 type Schema = z.output<typeof createUserSchema>
 
-const state = reactive({
-  username: undefined,
-  name: undefined,
-  password: undefined,
-})
+const fields: AuthFormField[] = [
+  {
+    name: 'username',
+    type: 'text',
+    label: 'Username',
+    placeholder: 'Enter your username',
+    required: true
+  },
+  {
+    name: "name",
+    type: "text",
+    label: "Name",
+    placeholder: "Enter your name",
+    required: true
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    placeholder: 'Enter your password',
+    required: true
+  }
+]
 
 const toast = useToast()
 
@@ -31,25 +51,22 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UCard rounded>
-    <UForm :schema="createUserSchema" :state="state" class="space-y-4" @submit="onSubmit">
-      <UFormField label="Username" name="username">
-        <UInput v-model="state.username"/>
-      </UFormField>
-
-      <UFormField label="Name" name="name">
-        <UInput v-model="state.name"/>
-      </UFormField>
-
-      <UFormField label="Password" name="password">
-        <UInput v-model="state.password" type="password"/>
-      </UFormField>
-
-      <UButton type="submit">
-        Register
-      </UButton>
-    </UForm>
-  </UCard>
+  <div class="flex flex-col items-center justify-center gap-4 p-4">
+    <UPageCard class="w-full max-w-md">
+      <UAuthForm
+          :schema="signInSchema"
+          :fields="fields"
+          title="Register"
+          icon="i-lucide-lock"
+          @submit="onSubmit"
+      >
+        <template #description>
+          Already have an account?
+          <ULink to="/signin" class="text-primary font-medium">Sign in</ULink>
+        </template>
+      </UAuthForm>
+    </UPageCard>
+  </div>
 </template>
 
 <style scoped>
