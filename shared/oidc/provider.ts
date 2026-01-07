@@ -1,5 +1,16 @@
 import {type OIDCProvider, oidcProviderSchema} from "#shared/oidc/schema";
 
+const oidcProviderCache: Record<string, Promise<OIDCProvider | null>> = {};
+
+export async function getOIDCProvider(): Promise<OIDCProvider | null> {
+    const runtimeConfig = useRuntimeConfig();
+    const discoveryUrl = runtimeConfig.public.oidcDiscoveryURL;
+    if (!oidcProviderCache[discoveryUrl]) {
+        oidcProviderCache[discoveryUrl] = getOIDCProviderWithDiscoveryUrl(discoveryUrl);
+    }
+    return oidcProviderCache[discoveryUrl];
+}
+
 /**
  * Retrieves an OpenID Connect (OIDC) provider's configuration using the provided discovery URL.
  *
