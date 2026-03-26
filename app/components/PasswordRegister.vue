@@ -3,7 +3,6 @@ import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
 import {createUserSchema} from "#shared/schemas/CreateUserSchema";
 import type {AuthFormField} from "@nuxt/ui";
-import {signInSchema} from "#shared/schemas/SignInSchema";
 
 type Schema = z.output<typeof createUserSchema>
 
@@ -54,7 +53,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   <div class="flex flex-col items-center justify-center gap-4 p-4">
     <UPageCard class="w-full max-w-md">
       <UAuthForm
-          :schema="signInSchema"
+          :schema="createUserSchema"
           :fields="fields"
           title="Register"
           icon="i-lucide-lock"
