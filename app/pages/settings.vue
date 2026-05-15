@@ -18,7 +18,7 @@ const runtimeConfig = useRuntimeConfig();
 
   <template v-if="runtimeConfig.public.oidcDiscoveryURL">
     <h2>Connect to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
-    <UButton to="/api/oidc/login">Connect</UButton>
+    <UButton to="/api/oidc/login" external>Connect</UButton>
   </template>
 </template>
 
