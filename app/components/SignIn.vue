@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import {z} from "zod";
-import type {FormSubmitEvent} from "#ui/types";
+import type {ButtonProps, FormSubmitEvent} from "#ui/types";
 import {signInSchema} from "#shared/schemas/SignInSchema";
 import type {AuthFormField} from "@nuxt/ui";
 
 type Schema = z.output<typeof signInSchema>
 
 const toast = useToast()
+
+const runtimeConfig = useRuntimeConfig()
+const provider = {
+  label: runtimeConfig.public.oidcName,
+  icon: "i-lucide-log-in",
+  to: '/api/oidc/login'
+}
+const providers: ButtonProps[] = []
+if (runtimeConfig.public.oidcDiscoveryURL) {
+  providers.push(provider)
+}
 
 const fields: AuthFormField[] = [
   {
@@ -47,6 +58,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <UPageCard class="w-full max-w-md">
       <UAuthForm
           :schema="signInSchema"
+          :providers="providers"
           :fields="fields"
           title="Welcome back!"
           icon="i-lucide-lock"

@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <PasswordSignIn/>
+  <SignIn/>
 </template>
 
 <style scoped>
