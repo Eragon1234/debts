@@ -9,10 +9,14 @@ type Schema = z.output<typeof signInSchema>
 const toast = useToast()
 
 const runtimeConfig = useRuntimeConfig()
+const handleOidcLogin = async () => {
+  await navigateTo('/api/oidc/login', {external: true})
+}
+
 const provider = {
   label: runtimeConfig.public.oidcName,
   icon: "i-lucide-log-in",
-  to: '/api/oidc/login'
+  click: handleOidcLogin
 }
 const providers: ButtonProps[] = []
 if (runtimeConfig.public.oidcDiscoveryURL) {
