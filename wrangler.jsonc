@@ -10,6 +10,9 @@
   "observability": {
     "enabled": true
   },
+  "vars": {
+    "NUXT_PUBLIC_BASE_URL": "https://debts.gerstberger.me"
+  },
   "d1_databases": [
     {
       "binding": "DB",
