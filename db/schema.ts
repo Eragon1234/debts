@@ -34,9 +34,9 @@ export const oidcCredentials = sqliteTable('oidc_credentials', {
     userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     provider: text('provider').notNull(),
     subject: text('subject').notNull()
-}, (t) => ({
-    unique: unique().on(t.provider, t.subject)
-}))
+}, (t) => [
+    unique().on(t.provider, t.subject)
+])
 
 export const oidcCredentialsRelations = relations(oidcCredentials, ({one}) => ({
     user: one(users, {
@@ -71,6 +71,6 @@ export const counter = sqliteTable('counter', {
     from: integer('from').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     to: integer('to').references(() => users.id, {onDelete: 'cascade'}).notNull(),
     value: integer({mode: 'number'}).notNull()
-}, (t) => ({
-    unique: unique().on(t.from, t.to)
-}))
+}, (t) => [
+    unique().on(t.from, t.to)
+])
