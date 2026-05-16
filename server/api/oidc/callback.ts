@@ -4,6 +4,9 @@ import {useUserSession} from "~/utils/parseUserSession";
 import {tables, useDrizzle} from "~~/db/db";
 import {and, eq} from "drizzle-orm";
 import {z} from "zod";
+import type {H3Event} from "h3";
+import type {NitroRuntimeConfig} from "nitropack/types"
+import {LoggedInUserSession} from "~/composables/session";
 
 const tokenResponseSchema = z.object({
     access_token: z.string(),
@@ -51,6 +54,8 @@ const userInfoSchema = z.object({
     name: z.string(),
     preferred_username: z.string(),
 });
+
+type UserInfo = z.infer<typeof userInfoSchema>
 
 async function fetchUserInfo(accessToken: string) {
     const runtimeConfig = useRuntimeConfig();
@@ -104,32 +109,7 @@ export default defineEventHandler(async (event) => {
     const userSession = await useUserSession(event);
 
     if (userSession.loggedIn) {
-        const existingCredential = await db
-            .select()
-            .from(tables.oidcCredentials)
-            .where(
-                and(
-                    eq(tables.oidcCredentials.userId, userSession.user.id),
-                    eq(tables.oidcCredentials.provider, runtimeConfig.public.oidcName)
-                )
-            )
-            .limit(1)
-            .execute()
-
-        if (existingCredential.length === 0) {
-            await db
-                .insert(tables.oidcCredentials)
-                .values({
-                    userId: userSession.user.id,
-                    provider: runtimeConfig.public.oidcName,
-                    subject: userInfo.sub,
-                })
-        } else if (existingCredential[0]!.userId !== userSession.user.id) {
-            throw createError("OIDC credential is already linked to another user")
-        } else {
-            console.log("Skipped linking OIDC credential - already linked to user")
-            return;
-        }
+        await linkOIDC(runtimeConfig, userSession, userInfo, db);
     } else {
         const oidcCredential = await db.query.oidcCredentials.findFirst({
             where: and(
@@ -145,40 +125,61 @@ export default defineEventHandler(async (event) => {
 
             await setJWTToken(user!, event);
         } else {
-            const runtimeConfig = useRuntimeConfig(event);
-            const existingUser = await db.query.users.findFirst({
-                where: eq(tables.users.username, userInfo.preferred_username)
-            })
-            if (existingUser && runtimeConfig.public.oidcAutomatchUsername) {
-                await db.insert(tables.oidcCredentials).values({
-                    userId: existingUser.id,
-                    provider: runtimeConfig.public.oidcName,
-                    subject: userInfo.sub,
-                })
-                await setJWTToken(existingUser, event);
-                return;
-            }
-
-            if (existingUser) {
-                // Incomplete implementation since it prevents users with duplicate usernames from registering using oidc
-                throw new Error("Username has already been taken")
-            }
-
-            const newUser = await db.insert(tables.users).values({
-                name: userInfo.name,
-                username: userInfo.preferred_username
-            }).returning().get()
-
-            await db.insert(tables.oidcCredentials).values({
-                userId: newUser.id,
-                provider: runtimeConfig.public.oidcName,
-                subject: userInfo.sub,
-            })
-
-            await setJWTToken(newUser, event);
+            await matchOrCreateUser(event, userInfo, db);
         }
     }
 
     await sendRedirect(event, "/");
     return {ok: true}
 });
+
+async function linkOIDC(runtimeConfig: NitroRuntimeConfig, userSession: LoggedInUserSession, userInfo: UserInfo, db: ReturnType<typeof useDrizzle>) {
+    const existingCredential = await db
+        .select()
+        .from(tables.oidcCredentials)
+        .where(and(eq(tables.oidcCredentials.userId, userSession.user.id), eq(tables.oidcCredentials.provider, runtimeConfig.public.oidcName)))
+        .limit(1)
+        .execute()
+
+    if (existingCredential.length === 0) {
+        await db
+            .insert(tables.oidcCredentials)
+            .values({
+                userId: userSession.user.id, provider: runtimeConfig.public.oidcName, subject: userInfo.sub,
+            })
+    } else if (existingCredential[0]!.userId !== userSession.user.id) {
+        throw createError("OIDC credential is already linked to another user")
+    } else {
+        console.log("Skipped linking OIDC credential - already linked to user")
+        return;
+    }
+}
+
+async function matchOrCreateUser(event: H3Event, userInfo: UserInfo, db: ReturnType<typeof useDrizzle>) {
+    const runtimeConfig = useRuntimeConfig(event);
+    const existingUser = await db.query.users.findFirst({
+        where: eq(tables.users.username, userInfo.preferred_username)
+    })
+    if (existingUser && runtimeConfig.public.oidcAutomatchUsername) {
+        await db.insert(tables.oidcCredentials).values({
+            userId: existingUser.id, provider: runtimeConfig.public.oidcName, subject: userInfo.sub,
+        })
+        await setJWTToken(existingUser, event);
+        return;
+    }
+
+    if (existingUser) {
+        // Incomplete implementation since it prevents users with duplicate usernames from registering using oidc
+        throw new Error("Username has already been taken")
+    }
+
+    const newUser = await db.insert(tables.users).values({
+        name: userInfo.name, username: userInfo.preferred_username
+    }).returning().get()
+
+    await db.insert(tables.oidcCredentials).values({
+        userId: newUser.id, provider: runtimeConfig.public.oidcName, subject: userInfo.sub,
+    })
+
+    await setJWTToken(newUser, event);
+}
