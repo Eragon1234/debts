@@ -11,7 +11,8 @@
     "enabled": true
   },
   "vars": {
-    "NUXT_PUBLIC_BASE_URL": "https://debts.gerstberger.me"
+    "NUXT_PUBLIC_BASE_URL": "https://debts.gerstberger.me",
+    "NUXT_PUBLIC_OIDC_AUTOMATCH_USERNAME": "true"
   },
   "d1_databases": [
     {

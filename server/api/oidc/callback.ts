@@ -145,6 +145,25 @@ export default defineEventHandler(async (event) => {
 
             await setJWTToken(user!, event);
         } else {
+            const runtimeConfig = useRuntimeConfig(event);
+            const existingUser = await db.query.users.findFirst({
+                where: eq(tables.users.username, userInfo.preferred_username)
+            })
+            if (existingUser && runtimeConfig.public.oidcAutomatchUsername) {
+                await db.insert(tables.oidcCredentials).values({
+                    userId: existingUser.id,
+                    provider: runtimeConfig.public.oidcName,
+                    subject: userInfo.sub,
+                })
+                await setJWTToken(existingUser, event);
+                return;
+            }
+
+            if (existingUser) {
+                // Incomplete implementation since it prevents users with duplicate usernames from registering using oidc
+                throw new Error("Username has already been taken")
+            }
+
             const newUser = await db.insert(tables.users).values({
                 name: userInfo.name,
                 username: userInfo.preferred_username

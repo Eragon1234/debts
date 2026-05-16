@@ -10,6 +10,7 @@ export default defineNuxtConfig({
             oidcName: "",
             oidcDiscoveryURL: "",
             oidcClientID: "",
+            oidcAutomatchUsername: false,
             jwtPublicKey: "",
             baseURL: ""
         }
