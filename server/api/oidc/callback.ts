@@ -1,6 +1,6 @@
 import {getOIDCProvider} from "#shared/oidc/provider";
 import {setJWTToken} from "~/utils/jwt";
-import {parseUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "~/utils/parseUserSession";
 import {tables, useDrizzle} from "~~/db/db";
 import {and, eq} from "drizzle-orm";
 import {z} from "zod";
@@ -99,35 +99,31 @@ export default defineEventHandler(async (event) => {
 
     const userInfo = await fetchUserInfo(accessToken);
 
-    const token = getCookie(event, "jwt");
-
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
-    if (token) {
-        const userSession = await parseUserSession(token, useRuntimeConfig(event));
+    const userSession = await getUserSession(event);
 
-        if (userSession.loggedIn) {
-            const existingCredential = await db
-                .select()
-                .from(tables.oidcCredentials)
-                .where(
-                    and(
-                        eq(tables.oidcCredentials.userId, userSession.user.id),
-                        eq(tables.oidcCredentials.provider, runtimeConfig.public.oidcName)
-                    )
+    if (userSession.loggedIn) {
+        const existingCredential = await db
+            .select()
+            .from(tables.oidcCredentials)
+            .where(
+                and(
+                    eq(tables.oidcCredentials.userId, userSession.user.id),
+                    eq(tables.oidcCredentials.provider, runtimeConfig.public.oidcName)
                 )
-                .limit(1)
-                .execute()
+            )
+            .limit(1)
+            .execute()
 
-            if (existingCredential.length === 0) {
-                await db
-                    .insert(tables.oidcCredentials)
-                    .values({
-                        userId: userSession.user.id,
-                        provider: runtimeConfig.public.oidcName,
-                        subject: userInfo.sub,
-                    })
-            }
+        if (existingCredential.length === 0) {
+            await db
+                .insert(tables.oidcCredentials)
+                .values({
+                    userId: userSession.user.id,
+                    provider: runtimeConfig.public.oidcName,
+                    subject: userInfo.sub,
+                })
         }
     } else {
         const oidcCredential = await db.query.oidcCredentials.findFirst({

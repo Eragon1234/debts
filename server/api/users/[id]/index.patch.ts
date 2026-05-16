@@ -1,6 +1,6 @@
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
-import {parseUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "~/utils/parseUserSession";
 import {setJWTToken} from "~/utils/jwt";
 import {patchUserSchema} from "#shared/schemas/PatchUserSchema";
 
@@ -15,13 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const id = getRouterParam(event, "id")!;
 
-    const token = getCookie(event, "jwt");
-
-    if (!token) {
-        throw unauthorized
-    }
-
-    const userSession = await parseUserSession(token, useRuntimeConfig(event));
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

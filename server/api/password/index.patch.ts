@@ -1,4 +1,4 @@
-import {parseUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "~/utils/parseUserSession";
 import {passwordHash} from "~/utils/password";
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
@@ -13,13 +13,7 @@ export default defineEventHandler(async (event) => {
         throw result.error.issues
     }
 
-    const token = getCookie(event, "jwt");
-
-    if (!token) {
-        throw unauthorized
-    }
-
-    const userSession = await parseUserSession(token, useRuntimeConfig(event));
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

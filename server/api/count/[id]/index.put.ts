@@ -1,4 +1,4 @@
-import {parseUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "~/utils/parseUserSession";
 import {useDrizzle} from "~~/db/db";
 import {counter} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
@@ -17,13 +17,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 400, message: "Missing count"})
     }
 
-    const token = getCookie(event, "jwt");
-
-    if (!token) {
-        throw unauthorized
-    }
-
-    const userSession = await parseUserSession(token, useRuntimeConfig(event));
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized
