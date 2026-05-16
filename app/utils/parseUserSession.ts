@@ -2,7 +2,13 @@ import type {UserSession} from "~/composables/session";
 import {importSPKI, jwtVerify} from "jose";
 import type {RuntimeConfig} from "nuxt/schema";
 
-export async function parseUserSession(token: string, runtimeConfig: RuntimeConfig): Promise<UserSession> {
+export async function parseUserSession(token: string | null, runtimeConfig: RuntimeConfig): Promise<UserSession> {
+    if (!token) {
+        return {
+            loggedIn: false,
+            user: null
+        }
+    }
     const publicKey = await importSPKI(runtimeConfig.public.jwtPublicKey as string, 'RS256')
 
     try {
