@@ -1,4 +1,4 @@
-import {getUserSession} from "~/utils/parseUserSession";
+import {useUserSession} from "~/utils/parseUserSession";
 import {passwordHash} from "~/utils/password";
 import {tables, useDrizzle} from "~~/db/db";
 import {eq} from "drizzle-orm";
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
         throw result.error.issues
     }
 
-    const userSession = await getUserSession(event);
+    const userSession = await useUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

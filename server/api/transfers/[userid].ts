@@ -1,4 +1,4 @@
-import {getUserSession} from "~/utils/parseUserSession";
+import {useUserSession} from "~/utils/parseUserSession";
 import {useDrizzle} from "~~/db/db";
 import {and, desc, eq, or} from "drizzle-orm";
 import {transfers} from "~~/db/schema";
@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 400, message: "Missing user id"})
     }
 
-    const userSession = await getUserSession(event);
+    const userSession = await useUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

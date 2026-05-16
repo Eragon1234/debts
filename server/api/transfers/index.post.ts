@@ -1,4 +1,4 @@
-import {getUserSession} from "~/utils/parseUserSession";
+import {useUserSession} from "~/utils/parseUserSession";
 import {tables, useDrizzle} from "~~/db/db";
 import {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
 
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
     const data = result.data;
 
-    const userSession = await getUserSession(event);
+    const userSession = await useUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

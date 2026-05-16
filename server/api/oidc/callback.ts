@@ -1,6 +1,6 @@
 import {getOIDCProvider} from "#shared/oidc/provider";
 import {setJWTToken} from "~/utils/jwt";
-import {getUserSession} from "~/utils/parseUserSession";
+import {useUserSession} from "~/utils/parseUserSession";
 import {tables, useDrizzle} from "~~/db/db";
 import {and, eq} from "drizzle-orm";
 import {z} from "zod";
@@ -101,7 +101,7 @@ export default defineEventHandler(async (event) => {
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
 
-    const userSession = await getUserSession(event);
+    const userSession = await useUserSession(event);
 
     if (userSession.loggedIn) {
         const existingCredential = await db
