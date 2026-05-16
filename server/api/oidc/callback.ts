@@ -124,6 +124,11 @@ export default defineEventHandler(async (event) => {
                     provider: runtimeConfig.public.oidcName,
                     subject: userInfo.sub,
                 })
+        } else if (existingCredential[0]!.userId !== userSession.user.id) {
+            throw createError("OIDC credential is already linked to another user")
+        } else {
+            console.log("Skipped linking OIDC credential - already linked to user")
+            return;
         }
     } else {
         const oidcCredential = await db.query.oidcCredentials.findFirst({
