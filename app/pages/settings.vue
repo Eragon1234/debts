@@ -7,6 +7,8 @@ definePageMeta({
 })
 
 const runtimeConfig = useRuntimeConfig();
+
+const {data: oidcStatus} = await useFetch("/api/oidc/status");
 </script>
 
 <template>
@@ -17,8 +19,11 @@ const runtimeConfig = useRuntimeConfig();
   <ChangePasswordForm/>
 
   <template v-if="runtimeConfig.public.oidcDiscoveryURL">
-    <h2>Connect to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
-    <UButton to="/api/oidc/login" external>Connect</UButton>
+    <h2 v-if="oidcStatus?.connected">Already connected to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
+    <template v-else>
+      <h2>Connect to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
+      <UButton to="/api/oidc/login" external>Connect</UButton>
+    </template>
   </template>
 </template>
 
