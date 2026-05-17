@@ -1,6 +1,5 @@
 import {useUserSession} from "~/utils/parseUserSession";
 import {useDrizzle} from "~~/db/db";
-import {useRuntimeConfig} from "nuxt/app";
 import {oidcCredentials} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
 
@@ -10,7 +9,7 @@ export default defineEventHandler(async event => {
         throw createError({statusCode: 401, statusMessage: 'Unauthorized'});
     }
 
-    const runtimeConfig = useRuntimeConfig(event);
+    const runtimeConfig = useRuntimeConfig();
 
     const db = useDrizzle(event.context.cloudflare.env.DB);
     const oidc = await db
