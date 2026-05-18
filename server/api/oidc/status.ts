@@ -1,5 +1,4 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {useDrizzle} from "~~/db/db";
 import {oidcCredentials} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
 
@@ -11,7 +10,7 @@ export default defineEventHandler(async event => {
 
     const runtimeConfig = useRuntimeConfig();
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
     const oidc = await db
         .select()
         .from(oidcCredentials)

@@ -1,7 +1,8 @@
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {passwordHash} from "~/utils/password";
 import {setJWTToken} from "~/utils/jwt";
 import {createUserSchema} from "#shared/schemas/CreateUserSchema";
+import {useDatabase} from "#server/utils/db";
 
 export default defineEventHandler(async (event) => {
     const result = await readValidatedBody(event, createUserSchema.safeParse);
@@ -12,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
     const {username, name, password} = result.data;
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     const user = await db.insert(tables.users).values({
         name,

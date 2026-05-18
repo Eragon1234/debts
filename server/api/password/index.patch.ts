@@ -1,6 +1,6 @@
 import {useUserSession} from "~/utils/parseUserSession";
 import {passwordHash} from "~/utils/password";
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {changePasswordSchema} from "#shared/schemas/ChangePasswordSchema";
 
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         throw unauthorized
     }
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
     const password = await passwordHash(result.data.password);
 
     await db

@@ -1,4 +1,4 @@
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {passwordVerify} from "~/utils/password";
 import {setJWTToken} from "~/utils/jwt";
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
 
     const {username, password} = result.data;
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     const user = await db.query.users.findFirst({
         where: eq(tables.users.username, username),

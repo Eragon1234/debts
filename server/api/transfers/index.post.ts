@@ -1,5 +1,5 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
         throw unauthorized
     }
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     for (let i = 0; i < data.receivers.length; i++) {
         if (userSession.user.id !== data.sender && userSession.user.id !== data.receivers[i]) {

@@ -1,5 +1,4 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {useDrizzle} from "~~/db/db";
 import {and, desc, eq, or} from "drizzle-orm";
 import {transfers} from "~~/db/schema";
 
@@ -20,7 +19,7 @@ export default defineEventHandler(async (event) => {
 
     const id = parseInt(userid);
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     return db.select()
         .from(transfers)

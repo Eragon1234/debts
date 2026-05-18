@@ -1,5 +1,4 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {useDrizzle} from "~~/db/db";
 import {counter} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
 
@@ -23,7 +22,7 @@ export default defineEventHandler(async (event) => {
         throw unauthorized
     }
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     const reverseValue = (await db.select().from(counter).where(
         and(

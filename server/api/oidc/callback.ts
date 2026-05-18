@@ -104,7 +104,7 @@ export default defineEventHandler(async (event) => {
 
     const userInfo = await fetchUserInfo(accessToken);
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     const userSession = await useUserSession(event);
 

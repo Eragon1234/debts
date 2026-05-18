@@ -1,4 +1,4 @@
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {useUserSession} from "~/utils/parseUserSession";
 import {setJWTToken} from "~/utils/jwt";
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 403, message: "You are not allowed to update this user."})
     }
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
 
     const updatedUser = await db
         .update(tables.users)

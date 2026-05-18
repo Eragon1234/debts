@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {tables, useDrizzle} from "~~/db/db";
+import {tables} from "~~/db/db";
 import {like} from "drizzle-orm";
 
 const searchUserSchema = z.object({
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const {query} = result.data;
 
-    const db = useDrizzle(event.context.cloudflare.env.DB);
+    const db = useDatabase(event);
     return db.query.users.findMany({
         where: like(tables.users.username, `%${query}%`),
         limit: 10,
