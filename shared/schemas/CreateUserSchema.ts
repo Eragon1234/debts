@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {createInsertSchema} from "drizzle-zod";
+import {createInsertSchema} from "drizzle-orm/zod";
 import {tables} from "~~/db/db";
 
 export const createUserSchema = createInsertSchema(tables.users).extend({

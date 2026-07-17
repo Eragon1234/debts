@@ -1,6 +1,4 @@
 import {z} from "zod";
-import {tables} from "~~/db/db";
-import {like} from "drizzle-orm";
 
 const searchUserSchema = z.object({
     query: z.string()
@@ -17,7 +15,11 @@ export default defineEventHandler(async (event) => {
 
     const db = useDatabase(event);
     return db.query.users.findMany({
-        where: like(tables.users.username, `%${query}%`),
+        where: {
+            username: {
+                like: `%${query}%`
+            }
+        },
         limit: 10,
     });
 })

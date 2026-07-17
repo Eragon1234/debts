@@ -1,5 +1,3 @@
-import {tables} from "~~/db/db";
-import {eq} from "drizzle-orm";
 import {passwordVerify} from "~/utils/password";
 import {setJWTToken} from "~/utils/jwt";
 import {signInSchema} from "#shared/schemas/SignInSchema";
@@ -16,7 +14,9 @@ export default defineEventHandler(async (event) => {
     const db = useDatabase(event);
 
     const user = await db.query.users.findFirst({
-        where: eq(tables.users.username, username),
+        where: {
+            username: username
+        },
         with: {passwordCredentials: true}
     });
 

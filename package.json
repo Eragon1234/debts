@@ -12,9 +12,7 @@
   "dependencies": {
     "@nuxt/ui": "4.9.0",
     "bcryptjs": "^3.0.2",
-    "drizzle-kit": "^0.31.10",
-    "drizzle-orm": "^0.45.2",
-    "drizzle-zod": "^0.8.3",
+    "drizzle-orm": "1.0.0-rc.4",
     "jose": "^6.1.0",
     "nitro-cloudflare-dev": "^0.2.2",
     "nuxt": "4.4.8",
@@ -25,6 +23,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260714.1",
+    "drizzle-kit": "1.0.0-rc.4",
     "wrangler": "^4.110.0"
   }
 }
