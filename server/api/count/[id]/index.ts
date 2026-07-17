@@ -1,6 +1,4 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {counter} from "~~/db/schema";
-import {and, eq} from "drizzle-orm";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
@@ -18,15 +16,19 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = useDatabase(event);
-    const result = (await db.select().from(counter).where(and(
-        eq(counter.from, userSession.user.id),
-        eq(counter.to, parseInt(id))
-    )))[0]
+    const result = await db.query.counter.findFirst({
+        where: {
+            from: userSession.user.id,
+            to: parseInt(id)
+        }
+    })
 
-    const resultTwo = (await db.select().from(counter).where(and(
-        eq(counter.from, parseInt(id)),
-        eq(counter.to, userSession.user.id)
-    )))[0]
+    const resultTwo = await db.query.counter.findFirst({
+        where: {
+            from: parseInt(id),
+            to: userSession.user.id
+        }
+    })
 
     const value = (result?.value || 0) - (resultTwo?.value || 0)
 

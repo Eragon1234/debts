@@ -24,12 +24,12 @@ export default defineEventHandler(async (event) => {
 
     const db = useDatabase(event);
 
-    const reverseValue = (await db.select().from(counter).where(
-        and(
-            eq(counter.from, parseInt(id)),
-            eq(counter.to, userSession.user.id)
-        )
-    ))[0]
+    const reverseValue = await db.query.counter.findFirst({
+        where: {
+            from: parseInt(id),
+            to: userSession.user.id
+        }
+    })
 
     const newCount = body.count + (reverseValue?.value ?? 0)
 
