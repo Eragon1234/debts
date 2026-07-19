@@ -12,18 +12,14 @@ const {data: oidcStatus} = await useFetch("/api/oidc/status");
 </script>
 
 <template>
-  <h2>Update User Info</h2>
   <UpdateUserInfoForm/>
 
-  <h2>Change Password</h2>
   <ChangePasswordForm/>
 
-  <template v-if="runtimeConfig.public.oidcDiscoveryURL">
-    <h2 v-if="oidcStatus?.connected">Already connected to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
-    <template v-else>
-      <h2>Connect to {{ runtimeConfig.public.oidcName ?? "OIDC" }}</h2>
-      <UButton to="/api/oidc/login" external>Connect</UButton>
-    </template>
-  </template>
+  <UPageCard v-if="runtimeConfig.public.oidcDiscoveryURL"
+             title="Connect to {{ runtimeConfig.public.oidcName ?? 'OIDC' }}">
+    <p v-if="oidcStatus?.connected" class="text-lg">Already connected!</p>
+    <UButton v-else to="/api/oidc/login" external class="text-lg">Connect</UButton>
+  </UPageCard>
 </template>
 

@@ -31,15 +31,17 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="changePasswordSchema" :state="state" @submit="onSubmit">
-    <UFormField label="New password" name="password">
-      <UInput v-model="state.password" type="password"/>
-    </UFormField>
+  <UPageCard title="Change Password" variant="subtle">
+    <UForm :schema="changePasswordSchema" :state="state" @submit="onSubmit" class="flex flex-col gap-4">
+      <UFormField name="password">
+        <UInput v-model="state.password" type="password" placeholder="New Password"/>
+      </UFormField>
 
-    <UButton type="submit">
-      Change Password
-    </UButton>
-  </UForm>
+      <UButton type="submit">
+        Update
+      </UButton>
+    </UForm>
+  </UPageCard>
 </template>
 
 <style scoped>

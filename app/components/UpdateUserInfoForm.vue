@@ -34,19 +34,21 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm :schema="patchUserSchema" :state="state" @submit="onSubmit">
-    <UFormField label="Name" name="name">
-      <UInput v-model="state.name"/>
-    </UFormField>
+  <UPageCard variant="subtle" title="Update User Info">
+    <UForm :schema="patchUserSchema" :state="state" @submit="onSubmit" class="flex flex-col gap-4">
+      <UFormField label="Name" name="name">
+        <UInput v-model="state.name"/>
+      </UFormField>
 
-    <UFormField label="Username" name="username">
-      <UInput v-model="state.username"/>
-    </UFormField>
+      <UFormField label="Username" name="username">
+        <UInput v-model="state.username"/>
+      </UFormField>
 
-    <UButton type="submit">
-      Update
-    </UButton>
-  </UForm>
+      <UButton type="submit">
+        Update
+      </UButton>
+    </UForm>
+  </UPageCard>
 </template>
 
 <style scoped>
