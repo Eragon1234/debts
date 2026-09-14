@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "wrangler d1 migrations apply DB"
+    "db:migrate": "wrangler d1 migrations apply DB",
+    "predeploy": "pnpm run db:migrate --remote",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@nuxt/ui": "4.11.1",
