@@ -1,5 +1,5 @@
 import {useUserSession} from "~/utils/parseUserSession";
-import {passwordHash} from "~/utils/password";
+import {passwordHash, passwordVerify} from "~/utils/password";
 import {tables} from "~~/db/db";
 import {eq} from "drizzle-orm";
 import {changePasswordSchema} from "#shared/schemas/ChangePasswordSchema";
@@ -20,18 +20,35 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = useDatabase(event);
-    const password = await passwordHash(result.data.password);
 
-    await db
+    const currentPassword = await db.query.passwordCredentials.findFirst({
+        where: {
+            userId: userSession.user.id
+        }
+    })
+
+    const noPassword = !currentPassword;
+    if (noPassword || !await passwordVerify(result.data.oldPassword, currentPassword.password)) {
+        throw createError({
+            statusCode: 400,
+            message: 'Invalid password'
+        })
+    }
+
+    const newPassword = await passwordHash(result.data.newPassword);
+
+    const [newPasswordCredentials] = await db
         .update(tables.passwordCredentials)
-        .set({password})
+        .set({password: newPassword})
         .where(eq(tables.passwordCredentials.userId, userSession.user.id))
-        .catch(() => {
-            throw createError({
-                statusCode: 400,
-                message: 'Failed to change password. Please try again.'
-            })
-        });
+        .returning();
+
+    if (!newPasswordCredentials) {
+        throw createError({
+            statusCode: 400,
+            message: 'Failed to change password. Please try again.'
+        })
+    }
 
     return {ok: true}
 })
