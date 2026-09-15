@@ -17,21 +17,15 @@ export default defineEventHandler(async (event) => {
         where: {
             username: username
         },
-        with: {passwordCredentials: true}
+        with: {passwordCredential: true}
     });
 
     if (!user) throw createError({statusCode: 400, message: 'User not found'})
 
-    if (!user.passwordCredentials) throw createError({statusCode: 400, message: 'User has no password credentials'})
+    if (!user.passwordCredential) throw createError({statusCode: 400, message: 'User has no password credentials'})
 
-    let foundValidCredential = false
-    for (const credential of user.passwordCredentials) {
-        if (await passwordVerify(password, credential.password)) {
-            foundValidCredential = true
-            break
-        }
-    }
-    if (!foundValidCredential) {
+    const validCredential = await passwordVerify(password, user.passwordCredential.password)
+    if (!validCredential) {
         throw createError({statusCode: 400, message: 'Invalid password'})
     }
 

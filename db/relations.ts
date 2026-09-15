@@ -3,7 +3,7 @@ import {defineRelations} from "drizzle-orm";
 
 export const relations = defineRelations(schema, (r) => ({
     users: {
-        passwordCredentials: r.many.passwordCredentials(),
+        passwordCredential: r.one.passwordCredentials(),
         sentTransfers: r.many.transfers({
             from: r.users.id,
             to: r.transfers.senderId

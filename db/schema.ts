@@ -7,7 +7,7 @@ export const users = sqliteTable('users', {
 })
 
 export const passwordCredentials = sqliteTable('password_credentials', {
-    userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull(),
+    userId: integer('user_id').references(() => users.id, {onDelete: 'cascade'}).notNull().primaryKey(),
     password: text('password').notNull()
 })
 
