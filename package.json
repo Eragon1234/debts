@@ -28,7 +28,11 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260908.1",
+    "@nuxt/test-utils": "^4.3.2",
+    "@vue/test-utils": "^2.5.1",
     "drizzle-kit": "1.0.0-rc.4",
+    "happy-dom": "^20.14.5",
+    "vitest": "^5.0.1",
     "wrangler": "^4.129.1"
   }
 }
