@@ -21,7 +21,7 @@ const {data: oidcStatus} = await useFetch("/api/oidc/status");
                :title="`Connect to ${ runtimeConfig.public.oidcName ?? 'OIDC' }`"
                variant="subtle">
       <p v-if="oidcStatus?.connected" class="text-lg">Already connected!</p>
-      <UButton v-else to="/api/oidc/login" external class="text-lg">Connect</UButton>
+      <UButton v-else class="text-lg" external to="/api/public/oidc/login">Connect</UButton>
     </UPageCard>
   </div>
 </template>

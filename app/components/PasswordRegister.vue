@@ -33,7 +33,7 @@ const fields: AuthFormField[] = [
 const toast = useToast()
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  $fetch('/api/users', {
+  $fetch('/api/public/users', {
     method: "POST",
     body: event.data
   }).then(_ => {

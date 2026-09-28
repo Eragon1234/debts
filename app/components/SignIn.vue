@@ -12,7 +12,7 @@ const runtimeConfig = useRuntimeConfig()
 const provider = {
   label: runtimeConfig.public.oidcName,
   icon: "i-lucide-log-in",
-  to: '/api/oidc/login',
+  to: '/api/public/oidc/login',
   external: true
 }
 const providers: ButtonProps[] = []
@@ -38,7 +38,7 @@ const fields: AuthFormField[] = [
 ]
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  $fetch('/api/password/authenticate', {
+  $fetch('/api/public/password/authenticate', {
     method: "POST",
     body: event.data
   }).then(_ => {

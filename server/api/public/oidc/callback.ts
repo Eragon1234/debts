@@ -26,7 +26,7 @@ async function exchangeCodeForToken(code: string) {
     const body = new URLSearchParams();
     body.append("grant_type", "authorization_code");
     body.append("code", code);
-    body.append("redirect_uri", `${runtimeConfig.public.baseURL}/api/oidc/callback`);
+    body.append("redirect_uri", `${runtimeConfig.public.baseURL}/api/public/oidc/callback`);
     body.append("client_id", runtimeConfig.public.oidcClientID as string);
     body.append("client_secret", runtimeConfig.oidcClientSecret as string);
 

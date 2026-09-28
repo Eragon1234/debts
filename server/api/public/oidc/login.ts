@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
     const authorizationURL = buildAuthorizationURL(
         oidcProvider!,
         config.public.oidcClientID as string,
-        `${config.public.baseURL}/api/oidc/callback`
+        `${config.public.baseURL}/api/public/oidc/callback`
     );
 
     const state = crypto.randomUUID()
