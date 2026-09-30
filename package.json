@@ -23,17 +23,17 @@
     "nitro-cloudflare-dev": "^0.2.2",
     "nuxt": "4.5.2",
     "tailwindcss": "^4.3.3",
-    "vue": "^3.5.42",
+    "vue": "^3.5.43",
     "vue-router": "^5.3.1",
-    "zod": "^4.5.4"
+    "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260908.1",
+    "@cloudflare/workers-types": "^5.20260929.1",
     "@nuxt/test-utils": "^4.3.2",
     "@vue/test-utils": "^2.5.1",
     "drizzle-kit": "1.0.0-rc.4",
     "happy-dom": "^20.14.5",
-    "vitest": "^5.0.1",
-    "wrangler": "^4.129.1"
+    "vitest": "^5.0.2",
+    "wrangler": "^4.144.0"
   }
 }
