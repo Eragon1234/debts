@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
         httpOnly: true,
         secure: !import.meta.dev,
         sameSite: 'lax',
-        path: '/api/oidc'
+        path: '/api/public/oidc/callback'
     })
     authorizationURL.searchParams.set("state", state)
 
