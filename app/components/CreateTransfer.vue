@@ -43,7 +43,7 @@ const { data: receiversSearchItems, status: receiversSearchStatus } = await useF
   params: {
     query: receiversSearchTerm,
   },
-  transform: (data) => data.map(u => ({label: u.username, id: u.id}))
+  transform: (data) => data.map(u => ({label: u.name, id: u.id}))
 })
 
 const senderSearchTerm = ref<string>('');
@@ -51,7 +51,7 @@ const { data: senderSearchItems, status: senderSearchStatus } = await useFetch('
   params: {
     query: senderSearchTerm,
   },
-  transform: (data) => data.map(u => ({label: u.username, id: u.id}))
+  transform: (data) => data.map(u => ({label: u.name, id: u.id}))
 })
 </script>
 
