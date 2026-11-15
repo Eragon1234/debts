@@ -1,11 +1,8 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: "auth"
-})
 </script>
 
 <template>
-  <CreateTransfer/>
+  <SignIn/>
 </template>
 
 <style scoped>

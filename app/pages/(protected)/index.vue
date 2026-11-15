@@ -1,10 +1,6 @@
 <script setup lang="ts">
 import Counter from "~/components/Counter.vue";
 
-definePageMeta({
-  middleware: 'auth'
-})
-
 const {data} = await useFetch("/api/transfers/debts")
 const debts = Object.values(data.value ?? {})
 </script>

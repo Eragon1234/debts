@@ -3,10 +3,6 @@ import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
 import {createTransferSchema} from "#shared/schemas/CreateTransferSchema";
 
-definePageMeta({
-  middleware: "auth"
-})
-
 type Schema = z.output<typeof createTransferSchema>
 
 const state = reactive<Partial<Schema>>({

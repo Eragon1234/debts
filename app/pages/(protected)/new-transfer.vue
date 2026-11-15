@@ -1,11 +1,8 @@
 <script setup lang="ts">
-definePageMeta({
-  middleware: 'guest'
-})
 </script>
 
 <template>
-  <PasswordRegister/>
+  <CreateTransfer/>
 </template>
 
 <style scoped>

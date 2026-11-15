@@ -2,10 +2,6 @@
 import UpdateUserInfoForm from "~/components/UpdateUserInfoForm.vue";
 import ChangePasswordForm from "~/components/ChangePasswordForm.vue";
 
-definePageMeta({
-  middleware: "auth"
-})
-
 const runtimeConfig = useRuntimeConfig();
 
 const {data: oidcStatus} = await useFetch("/api/oidc/status");
