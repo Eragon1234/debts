@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 const route = useRoute();
-const user = getUserSession()
+const {session} = useUserSession();
 const {userid} = route.params;
 const debts = await useFetch(`/api/transfers/${userid}`);
 const debtsByDate = new Map();
@@ -12,7 +12,7 @@ for (const debt of debts.data.value) {
   if (!debtsByDate.has(debt.date)) {
     debtsByDate.set(debt.date, []);
   }
-  if (debt.receiverId === user.user!.id) {
+  if (debt.receiverId === session.value.user!.id) {
     debt.amount = -debt.amount;
   }
   debtsByDate.get(debt.date).push(debt);

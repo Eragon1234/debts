@@ -1,4 +1,4 @@
-import {useUserSession} from "~/utils/parseUserSession.ts";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 import {isPathUnderPrefix, isSafeRequestPath} from "#server/utils/path.ts";
 
 const API_PATH_PREFIX = "/api";
@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 400, statusMessage: "Malformed request"});
     }
 
-    event.context.session = await useUserSession(event);
+    event.context.session = await getUserSession(event);
 
     const isAPIPath = isPathUnderPrefix(pathname, API_PATH_PREFIX);
     if (!isAPIPath) {

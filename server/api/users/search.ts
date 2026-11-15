@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {useUserSession} from "~/utils/parseUserSession.ts";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
@@ -8,7 +8,7 @@ const searchUserSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

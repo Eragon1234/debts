@@ -1,11 +1,12 @@
 import {getOIDCProvider} from "#shared/oidc/provider";
-import {setJWTToken} from "~/utils/jwt";
-import {useUserSession} from "~/utils/parseUserSession";
+import {setJWTToken} from "#server/utils/jwt.ts";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 import {tables, useDrizzle} from "~~/db/db";
 import {z} from "zod";
 import type {H3Event} from "h3";
 import type {NitroRuntimeConfig} from "nitropack/types"
-import {LoggedInUserSession} from "~/composables/session";
+
+import {LoggedInUserSession} from "#shared/types/UserSession.ts";
 
 const tokenResponseSchema = z.object({
     access_token: z.string(),
@@ -105,7 +106,7 @@ export default defineEventHandler(async (event) => {
 
     const db = useDatabase(event);
 
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (userSession.loggedIn) {
         await linkOIDC(runtimeConfig, userSession, userInfo, db);

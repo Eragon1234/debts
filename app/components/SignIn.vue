@@ -37,11 +37,15 @@ const fields: AuthFormField[] = [
   }
 ]
 
+const {refresh} = useUserSession();
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   $fetch('/api/public/password/authenticate', {
     method: "POST",
     body: event.data
-  }).then(_ => {
+  }).then(async _ => {
+    await refresh();
+
     navigateTo('/')
   }).catch(error => {
     toast.add({

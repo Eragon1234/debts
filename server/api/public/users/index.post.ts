@@ -1,6 +1,6 @@
 import {tables} from "~~/db/db";
 import {passwordHash} from "~/utils/password";
-import {setJWTToken} from "~/utils/jwt";
+import {setJWTToken} from "#server/utils/jwt.ts";
 import {createUserSchema} from "#shared/schemas/CreateUserSchema";
 import {useDatabase} from "#server/utils/db";
 

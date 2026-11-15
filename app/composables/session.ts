@@ -1,27 +1,19 @@
-import type {User} from "~~/db/db";
 import {useState} from "#app";
+import type {UserSession} from "#shared/types/UserSession.ts";
 
-export type LoggedInUserSession = {
-    loggedIn: true,
-    user: User
-}
+export function useUserSession() {
+    const session = useState<UserSession>('userSession', () => ({
+        loggedIn: false,
+        user: null
+    }));
+    const requestFetch = useRequestFetch();
 
-export type LoggedOutUserSession = {
-    loggedIn: false,
-    user: null
-}
+    async function refresh() {
+        session.value = await requestFetch<UserSession>("/api/public/session");
+    }
 
-export type UserSession = LoggedInUserSession | LoggedOutUserSession
-
-const useUserSession = () => useState<UserSession>('userSession', () => ({
-    loggedIn: false,
-    user: null
-}));
-
-export function getUserSession() {
-    return useUserSession().value
-}
-
-export function setUserSession(userSession: UserSession) {
-    useUserSession().value = userSession
+    return {
+        session,
+        refresh
+    }
 }

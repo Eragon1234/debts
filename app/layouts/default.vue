@@ -8,7 +8,7 @@ const items = [
     }
   ]
 ]
-const {loggedIn, user} = getUserSession();
+const {session} = useUserSession();
 </script>
 
 <template>
@@ -17,8 +17,8 @@ const {loggedIn, user} = getUserSession();
       <NuxtLink to="/" class="text-3xl">Debts</NuxtLink>
       <div class="flex flex-row items-center gap-4">
         <NuxtLink to="/new-transfer" class="text-4xl">+</NuxtLink>
-        <UDropdownMenu :items="items" v-if="loggedIn">
-          <UAvatar :alt="user?.name"/>
+        <UDropdownMenu v-if="session.loggedIn" :items="items">
+          <UAvatar :alt="session.user.name"/>
         </UDropdownMenu>
       </div>
     </div>

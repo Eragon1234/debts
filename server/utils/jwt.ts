@@ -1,4 +1,4 @@
-import type {User} from "~~/db/db";
+import type {User} from "~~/db/db.ts";
 import type {EventHandlerRequest, H3Event} from "h3";
 import {importPKCS8, SignJWT} from "jose";
 
@@ -21,5 +21,8 @@ export async function setJWTToken(user: User, event: H3Event<EventHandlerRequest
     setCookie(event, "jwt", token, {
         maxAge: 7 * 24 * 60 * 60,
         secure: true,
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/"
     })
 }

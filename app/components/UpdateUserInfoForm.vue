@@ -3,22 +3,25 @@ import {z} from "zod";
 import type {FormSubmitEvent} from "#ui/types";
 import {patchUserSchema} from "#shared/schemas/PatchUserSchema";
 
-const {user} = getUserSession();
+const {session, refresh} = useUserSession();
+
+const user = session.value.user!;
 
 type Schema = z.output<typeof patchUserSchema>
 
 const state = reactive({
-  name: user!.name,
-  username: user!.username,
+  name: user.name,
+  username: user.username,
 })
 
 const toast = useToast();
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-  $fetch(`/api/users/${user!.id}`, {
+  $fetch(`/api/users/${user.id}`, {
     method: "PATCH",
     body: event.data
-  }).then(() => {
+  }).then(async () => {
+    await refresh();
     toast.add({
       title: "Success",
       description: "User updated"

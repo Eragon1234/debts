@@ -1,9 +1,9 @@
-import type {UserSession} from "~/composables/session";
+import type {UserSession} from "#shared/types/UserSession.ts";
 import {importSPKI, jwtVerify} from "jose";
 import type {RuntimeConfig} from "nuxt/schema";
 import type {H3Event} from "h3";
 
-export async function useUserSession(event: H3Event): Promise<UserSession> {
+export async function getUserSession(event: H3Event): Promise<UserSession> {
    const runtimeConfig = useRuntimeConfig(event);
    const token = getCookie(event, "jwt") ?? null;
    return await parseUserSession(token, runtimeConfig);

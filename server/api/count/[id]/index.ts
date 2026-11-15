@@ -1,4 +1,4 @@
-import {useUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 400, message: "Missing id"})
     }
 
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

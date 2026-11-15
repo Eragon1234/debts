@@ -1,4 +1,4 @@
-import {useUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 import {counter} from "~~/db/schema";
 import {and, eq} from "drizzle-orm";
 
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
         throw createError({statusCode: 400, message: "Missing count"})
     }
 
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

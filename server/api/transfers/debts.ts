@@ -1,11 +1,11 @@
-import {useUserSession} from "~/utils/parseUserSession";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
 import {transfers, users} from "~~/db/schema";
 import {eq, sum} from "drizzle-orm";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
 
 export default defineEventHandler(async (event) => {
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

@@ -1,7 +1,7 @@
 import {tables} from "~~/db/db";
 import {eq} from "drizzle-orm";
-import {useUserSession} from "~/utils/parseUserSession";
-import {setJWTToken} from "~/utils/jwt";
+import {getUserSession} from "#server/utils/parseUserSession.ts";
+import {setJWTToken} from "#server/utils/jwt.ts";
 import {patchUserSchema} from "#shared/schemas/PatchUserSchema";
 
 const unauthorized = createError({statusCode: 401, message: "Unauthorized"})
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
 
     const id = getRouterParam(event, "id")!;
 
-    const userSession = await useUserSession(event);
+    const userSession = await getUserSession(event);
 
     if (!userSession.loggedIn) {
         throw unauthorized

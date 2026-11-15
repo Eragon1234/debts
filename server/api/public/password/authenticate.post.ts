@@ -1,5 +1,5 @@
 import {passwordVerify} from "~/utils/password";
-import {setJWTToken} from "~/utils/jwt";
+import {setJWTToken} from "#server/utils/jwt.ts";
 import {signInSchema} from "#shared/schemas/SignInSchema";
 
 export default defineEventHandler(async (event) => {

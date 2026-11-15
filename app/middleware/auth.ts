@@ -1,9 +1,9 @@
-import {getUserSession} from "~/composables/session";
+import {useUserSession} from "~/composables/session";
 
 export default defineNuxtRouteMiddleware(() => {
-  const {loggedIn} = getUserSession();
+  const {session} = useUserSession();
 
-  if (!loggedIn) {
+  if (!session.value.loggedIn) {
     return navigateTo('/signin')
   }
 })
